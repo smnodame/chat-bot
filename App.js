@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
+  DatePickerIOS,
 } from 'react-native';
 import {GiftedChat, Actions, Bubble, SystemMessage, InputToolBar, Send, } from 'react-native-gifted-chat';
 import CustomActions from './screens/CustomActions';
@@ -226,7 +227,7 @@ export default class Example extends React.Component {
   }
 
   renderChatFooter(props) {
-    const option = 3
+    const option = 4
     if(option == 1) {
       return (
         <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
@@ -299,6 +300,15 @@ export default class Example extends React.Component {
           </ListItem>
           </ScrollView>
         </List>
+      )
+    } else {
+      return (
+        <DatePickerIOS 
+          date={new Date()}
+          onDateChange={() => {
+            
+          }}
+        />
       )
     }
   }
