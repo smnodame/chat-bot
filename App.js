@@ -5,11 +5,13 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Switch,
 } from 'react-native';
 import {GiftedChat, Actions, Bubble, SystemMessage, InputToolBar, Send, } from 'react-native-gifted-chat';
 import CustomActions from './screens/CustomActions';
 import CustomView from './screens/CustomView';
 import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, Item, Input, } from 'native-base';
+import Modal from 'react-native-modal';
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -215,7 +217,7 @@ export default class Example extends React.Component {
               blurOnSubmit={false} value={this.state.text} onChangeText={(text) => this.setState({text})} 
               placeholder="ADD A MESSAGE ..." placeholderTextColor={'#999'} />
         </Item>
-        <TouchableOpacity style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
+        <TouchableOpacity onPress={() => this.setState({ show: true })} style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
           <Icon ios='md-send' android="md-farward" style={{fontSize: 30, color: '#FF006F'}}/>
         </TouchableOpacity>
     </View>
@@ -302,27 +304,72 @@ export default class Example extends React.Component {
 
   render() {
     return (
-      <GiftedChat
-        messages={this.state.messages}
-        onSend={this.onSend}
-        loadEarlier={this.state.loadEarlier}
-        onLoadEarlier={this.onLoadEarlier}
-        renderChatFooter={this.renderChatFooter}
-        isLoadingEarlier={this.state.isLoadingEarlier}
-        renderInputToolbar={this.renderInputToolbar}
-        minInputToolbarHeight={60}
-        alwaysShowSend={true}
+      <Container>
+        
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={this.onSend}
+          loadEarlier={this.state.loadEarlier}
+          onLoadEarlier={this.onLoadEarlier}
+          renderChatFooter={this.renderChatFooter}
+          isLoadingEarlier={this.state.isLoadingEarlier}
+          renderInputToolbar={this.renderInputToolbar}
+          minInputToolbarHeight={60}
+          alwaysShowSend={true}
 
-        user={{
-          _id: 1, // sent messages should have same user._id
-        }}
+          user={{
+            _id: 1, // sent messages should have same user._id
+          }}
 
-        renderActions={this.renderCustomActions}
-        renderBubble={this.renderBubble}
-        renderSystemMessage={this.renderSystemMessage}
-        renderCustomView={this.renderCustomView}
-        renderFooter={this.renderFooter}
-      />
+          renderActions={this.renderCustomActions}
+          renderBubble={this.renderBubble}
+          renderSystemMessage={this.renderSystemMessage}
+          renderCustomView={this.renderCustomView}
+          renderFooter={this.renderFooter}
+        />
+        <Modal isVisible={this.state.show}>
+          <View style={styles.modalContent}>
+              <View style={{ padding: 15 }}>
+                <View>
+                  <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 16, fontWeight: 'bold' }}>
+                    Gran Torino (2008)
+                  </Text>
+                </View> 
+                <View style={{ marginBottom: 10 }}>
+                  <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 14 }}>
+                    Drama .... Angelina Jolie at an event for Gran Torino (2008) Alison Eastwood at an event for Gran Torino (2008)
+                  </Text>
+                </View> 
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+
+                    <Button transparent>
+                        <Icon name="ios-remove-circle-outline" style={styles.icon}/>
+                    </Button>
+                    <Item regular style={[styles.textInput, { borderColor: "#999", flexDirection: "row" }]}>
+                        <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#999' }}>
+                          $
+                        </Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#4B4B4B', flex: 1, textAlign: "center" }}>
+                          1,000
+                        </Text>
+                    </Item>
+                    <Button transparent
+                    >
+                        <Icon name="ios-add-circle-outline" style={styles.icon}/>
+                    </Button>
+                </View>
+              </View>
+              <Button full success style={{ borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, padding: 0, margin: 0, }}>
+                  <Text>ADD (+0.75 / MO)</Text>
+              </Button>
+          </View>
+        </Modal>
+      </Container>
     );
   }
 }
@@ -355,6 +402,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     backgroundColor: '#f2f2f2'
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  icon: {
+    fontSize: 30, color: '#4B4B4B',
   },
 });
 
