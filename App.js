@@ -4,12 +4,13 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import {GiftedChat, Actions, Bubble, SystemMessage} from 'react-native-gifted-chat';
 import CustomActions from './screens/CustomActions';
 import CustomView from './screens/CustomView';
-import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox } from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, } from 'native-base';
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -203,35 +204,81 @@ export default class Example extends React.Component {
   }
 
   renderChatFooter(props) {
-    return (
-      <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
-        <ScrollView>
-        <ListItem>
-          <Left>
-            <Text>Simon Mignolet</Text>
-          </Left>
-          <Right>
-          </Right>
-        </ListItem>
-        <ListItem>
-          <CheckBox checked={false} color="green" />
-          <Body>
-            <Text>Nathaniel Clyne</Text>
-          </Body>
-          <Right>
-          </Right>
-        </ListItem>
-        <ListItem>
-          <CheckBox checked={true} color="green" />
-          <Body>
-            <Text>Daily Stand Up</Text>
-          </Body>
-          <Right>
-          </Right>
-        </ListItem>
-        </ScrollView>
-      </List>
-    )
+    const option = 2
+    if(option == 1) {
+      return (
+        <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
+          <ScrollView>
+          <ListItem>
+            <CheckBox checked={false} color="green" />
+            <Body>
+              <Text>Simon Mignolet</Text>
+            </Body>
+            <Right>
+            </Right>
+          </ListItem>
+          <ListItem>
+            <CheckBox checked={false} color="green" />
+            <Body>
+              <Text>Nathaniel Clyne</Text>
+            </Body>
+            <Right>
+            </Right>
+          </ListItem>
+          <ListItem>
+            <CheckBox checked={true} color="green" />
+            <Body>
+              <Text>Daily Stand Up</Text>
+            </Body>
+            <Right>
+            </Right>
+          </ListItem>
+          </ScrollView>
+        </List>
+      )
+    } else if(option == 2) {
+      return (
+        <View style={{ flexDirection: "row" }}>
+          <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
+            <Text style={{ color: "#4B4B4B"}}>{ 'Confirm'.toUpperCase() }</Text>
+          </Button>
+          <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
+            <Text style={{ color: "#4B4B4B"}}>{ 'Normal'.toUpperCase() }</Text>
+          </Button>
+          <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
+            <Text style={{ color: "#4B4B4B"}}>{ 'Cancle'.toUpperCase() }</Text>
+          </Button>
+        </View>
+      )
+    } else if(option == 3) {
+      return (
+        <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
+          <ScrollView>
+          <ListItem>
+            <Left>
+              <Text>Simon Mignolet</Text>
+            </Left>
+            <Right>
+            </Right>
+          </ListItem>
+          <ListItem>
+            <Left>
+              <Text>Nathaniel Clyne</Text>
+            </Left>
+            <Right>
+            </Right>
+          </ListItem>
+          <ListItem>
+            <Left>
+              <Text>Daily Stand Up</Text>
+            </Left>
+            <Right>
+            </Right>
+          </ListItem>
+          </ScrollView>
+        </List>
+      )
+    }
   }
 
   render() {
