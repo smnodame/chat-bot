@@ -14,6 +14,8 @@ import CustomView from './screens/CustomView';
 import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, Item, Input, } from 'native-base';
 import Modal from 'react-native-modal';
 import SvgUri from 'react-native-svg-uri';
+import DatePicker from 'react-native-date-picker-x'
+
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -303,10 +305,10 @@ export default class Example extends React.Component {
       )
     } else {
       return (
-        <DatePickerIOS 
+        <DatePicker 
           date={new Date()}
           onDateChange={() => {
-            
+
           }}
         />
       )
