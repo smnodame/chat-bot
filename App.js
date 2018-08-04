@@ -2,13 +2,14 @@ import React from 'react';
 import {
   Platform,
   StyleSheet,
-  Text,
   View,
+  ScrollView,
 } from 'react-native';
 
 import {GiftedChat, Actions, Bubble, SystemMessage} from 'react-native-gifted-chat';
 import CustomActions from './screens/CustomActions';
 import CustomView from './screens/CustomView';
+import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox } from 'native-base';
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -201,6 +202,38 @@ export default class Example extends React.Component {
     return null;
   }
 
+  renderChatFooter(props) {
+    return (
+      <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
+        <ScrollView>
+        <ListItem>
+          <Left>
+            <Text>Simon Mignolet</Text>
+          </Left>
+          <Right>
+          </Right>
+        </ListItem>
+        <ListItem>
+          <CheckBox checked={false} color="green" />
+          <Body>
+            <Text>Nathaniel Clyne</Text>
+          </Body>
+          <Right>
+          </Right>
+        </ListItem>
+        <ListItem>
+          <CheckBox checked={true} color="green" />
+          <Body>
+            <Text>Daily Stand Up</Text>
+          </Body>
+          <Right>
+          </Right>
+        </ListItem>
+        </ScrollView>
+      </List>
+    )
+  }
+
   render() {
     return (
       <GiftedChat
@@ -208,6 +241,7 @@ export default class Example extends React.Component {
         onSend={this.onSend}
         loadEarlier={this.state.loadEarlier}
         onLoadEarlier={this.onLoadEarlier}
+        renderChatFooter={this.renderChatFooter}
         isLoadingEarlier={this.state.isLoadingEarlier}
 
         user={{
@@ -236,3 +270,6 @@ const styles = StyleSheet.create({
     color: '#aaa',
   },
 });
+
+// import Modal from 'react-native-modal';
+// <Modal isVisible={this.state.billModal}>{this.renderBillModal()}</Modal>
