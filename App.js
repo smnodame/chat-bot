@@ -4,13 +4,12 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
-
-import {GiftedChat, Actions, Bubble, SystemMessage} from 'react-native-gifted-chat';
+import {GiftedChat, Actions, Bubble, SystemMessage, InputToolBar, Send, } from 'react-native-gifted-chat';
 import CustomActions from './screens/CustomActions';
 import CustomView from './screens/CustomView';
-import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, } from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, Item, Input, } from 'native-base';
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -34,12 +33,17 @@ export default class Example extends React.Component {
     this._isAlright = null;
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     this._isMounted = true;
     this.setState(() => {
       return {
         messages: require('./data/messages.js'),
       };
+    });
+
+    await Expo.Font.loadAsync({
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
   }
 
@@ -203,8 +207,23 @@ export default class Example extends React.Component {
     return null;
   }
 
+  renderInputToolbar = (props) => {
+    return (
+      <View style={styles.footer}>
+        <Item regular style={[styles.textInput]}>
+            <Input style={{ fontSize: 15 }} ref={'chatInputRef'}  returnKeyType={'send'} 
+              blurOnSubmit={false} value={this.state.text} onChangeText={(text) => this.setState({text})} 
+              placeholder="ADD A MESSAGE ..." placeholderTextColor={'#999'} />
+        </Item>
+        <TouchableOpacity style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
+          <Icon ios='md-send' android="md-farward" style={{fontSize: 30, color: '#FF006F'}}/>
+        </TouchableOpacity>
+    </View>
+    )
+  }
+
   renderChatFooter(props) {
-    const option = 2
+    const option = 3
     if(option == 1) {
       return (
         <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
@@ -290,6 +309,9 @@ export default class Example extends React.Component {
         onLoadEarlier={this.onLoadEarlier}
         renderChatFooter={this.renderChatFooter}
         isLoadingEarlier={this.state.isLoadingEarlier}
+        renderInputToolbar={this.renderInputToolbar}
+        minInputToolbarHeight={60}
+        alwaysShowSend={true}
 
         user={{
           _id: 1, // sent messages should have same user._id
@@ -315,6 +337,24 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 14,
     color: '#aaa',
+  },
+  textInput: {
+    height: 45,
+    borderRadius: 5,
+    borderWidth: 0.5,
+    paddingHorizontal: 20,
+    paddingLeft: 10, 
+    paddingRight: 10,
+    marginLeft: 5, 
+    marginRight: 5, 
+    marginBottom: 5, 
+    backgroundColor: 'white', 
+    flex: 1,
+  },
+  footer: {
+    flexDirection: 'row',
+    padding: 10,
+    backgroundColor: '#f2f2f2'
   },
 });
 
