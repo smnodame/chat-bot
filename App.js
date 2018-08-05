@@ -11,7 +11,7 @@ import {
 import {GiftedChat, Actions, Bubble, SystemMessage, InputToolBar, Send, } from 'react-native-gifted-chat';
 import CustomActions from './screens/CustomActions';
 import CustomView from './screens/CustomView';
-import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, Item, Input, } from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, Item, Input, Card, CardItem, } from 'native-base';
 import Modal from 'react-native-modal';
 import SvgUri from 'react-native-svg-uri';
 import DatePicker from 'react-native-date-picker-x'
@@ -323,6 +323,27 @@ export default class Example extends React.Component {
 
           }}
         />
+      )
+    } else if(option == 5) {
+      return (
+        <View style={{ backgroundColor: "#F2F2F2" }}>
+          <Card style={{ margin: 10 }}>
+              <CardItem style={{ flexDirection: "row" }}>
+                <View style={{ flex: 1, paddingRight: 10, }}>
+                  <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: "500", marginBottom: 10, }}>
+                    Taylor Swift
+                  </Text>
+                  <Text style={{ color: "#CCC", fontSize: 12, fontWeight: "500", }}>
+                    Taylor Alison Swift is an American singer-songwriter. One of the world's leading contemporary recording artists,
+                  </Text>
+                </View>
+                <View style={{ height: "100%", alignItems: 'center', }}>
+                  <Switch style={{ marginBottom: 15 }} />
+                  <Text style={{ color: "#999", fontSize: 12, fontWeight: "bold",  }} >+$1.67/MO</Text>
+                </View>
+              </CardItem>
+          </Card>
+        </View>
       )
     } else {
       return null
