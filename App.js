@@ -425,7 +425,7 @@ export default class Example extends React.Component {
           renderFooter={this.renderFooter}
         />
         <Modal isVisible={this.state.show}>
-          <View style={styles.modalContent}>
+          {/* <View style={styles.modalContent}>
             <Button transparent style={{ position: 'absolute', right: 0, top: 0, }}>
               <Icon name='close' style={{ color: "#4B4B4B", fontSize: 35,  }} />
             </Button>
@@ -475,7 +475,7 @@ export default class Example extends React.Component {
           </View>
           <Button full success style={{ backgroundColor: "#FF006F", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, padding: 0, margin: 0, }}>
               <Text>ADD (+0.75 / MO)</Text>
-          </Button> 
+          </Button>  */}
 
           {/* <View style={styles.modalContent}>
             <Button transparent style={{ position: 'absolute', left: 0, top: 0, }}>
@@ -514,6 +514,37 @@ export default class Example extends React.Component {
           <Button full light style={{ backgroundColor: "#F8F8F8", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
               <Text style={{ color: "#4B4B4B", fontSize: 14, }} >GOT IT</Text>
           </Button>  */}
+
+          <View style={styles.modalContent}>
+              <Button transparent style={{ position: 'absolute', right: 0, top: 0, }}>
+                <Icon name='close' style={{ color: "#4B4B4B", fontSize: 35,  }} />
+              </Button>
+              <View style={{ padding: 15 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 15, marginTop: 20, }}>
+                  <View style={{ padding: 5 }}>
+                    <Text style={{ color: "#4B4B4B", fontSize: 15, fontWeight: 'bold' }} >ADD YOUR SIGNIFICANT OTHER</Text>
+                  </View>
+                </View>
+                <View style={{ flexDirection: "row", paddingBottom: 15, width: '100%', paddingLeft: 10, paddingRight: 10, }}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', }}>Taylor Swift Reputation Stadium a Tour with special guests Camlia Cabello and CharliXOX</Text>
+                  </View>
+                </View>
+                <View style={{ flexDirection: "row", paddingBottom: 10, width: '100%', }}>
+                  <Item regular style={[styles.textInput, { borderColor: "#DDD", flexDirection: "row" }]}>
+                      <Input style={{ fontSize: 16, fontWeight: "bold", }} placeholder="FIRST NAME" placeholderTextColor={'#DDD'} />
+                  </Item>
+                </View>
+                <View style={{ flexDirection: "row", paddingBottom: 10, width: '100%', }}>
+                  <Item regular style={[styles.textInput, { borderColor: "#DDD", flexDirection: "row" }]}>
+                      <Input style={{ fontSize: 16, fontWeight: "bold", }} placeholder="LAST NAME" placeholderTextColor={'#DDD'} />
+                  </Item>
+                </View>
+              </View>
+          </View>
+          <Button full light style={{ backgroundColor: "#999", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
+              <Text style={{ color: "#FFF", fontSize: 14, fontWeight: "bold", }} >CONFIRM</Text>
+          </Button> 
         </Modal>
       </Container>
     );
