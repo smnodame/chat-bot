@@ -214,22 +214,33 @@ export default class Example extends React.Component {
   }
 
   renderInputToolbar = (props) => {
-    return (
-      <View style={styles.footer}>
-        <Item regular style={[styles.textInput]}>
-            <Input style={{ fontSize: 15 }} ref={'chatInputRef'}  returnKeyType={'send'} 
-              blurOnSubmit={false} value={this.state.text} onChangeText={(text) => this.setState({text})} 
-              placeholder="ADD A MESSAGE ..." placeholderTextColor={'#999'} />
-        </Item>
-        <TouchableOpacity onPress={() => this.setState({ show: true })} style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
-          <Icon ios='md-send' android="md-farward" style={{fontSize: 30, color: '#FF006F'}}/>
-        </TouchableOpacity>
-    </View>
-    )
+    const option = 1
+    if(option == 1) {
+      return (
+        <View style={styles.footer}>
+          <Item regular style={[styles.textInput]}>
+              <Input style={{ fontSize: 15 }} ref={'chatInputRef'}  returnKeyType={'send'} 
+                blurOnSubmit={false} value={this.state.text} onChangeText={(text) => this.setState({text})} 
+                placeholder="ADD A MESSAGE ..." placeholderTextColor={'#999'} />
+          </Item>
+          <TouchableOpacity onPress={() => this.setState({ show: true })} style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
+            <Icon ios='md-send' android="md-farward" style={{fontSize: 30, color: '#FF006F'}}/>
+          </TouchableOpacity>
+      </View>
+      )
+    } else if(option == 2) {
+      return (
+        <View style={[styles.footer, { padding: 0, marginBottom: 0, }]}>
+          <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, margin: 0, padding: 0, flex: 1, height: 60, }}>
+            <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Confirm'.toUpperCase() }</Text>
+          </Button>
+        </View>
+      )
+    }
   }
 
   renderChatFooter(props) {
-    const option = 4
+    const option = 5
     if(option == 1) {
       return (
         <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
@@ -265,13 +276,13 @@ export default class Example extends React.Component {
       return (
         <View style={{ flexDirection: "row" }}>
           <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
-            <Text style={{ color: "#4B4B4B"}}>{ 'Confirm'.toUpperCase() }</Text>
+            <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Confirm'.toUpperCase() }</Text>
           </Button>
           <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
-            <Text style={{ color: "#4B4B4B"}}>{ 'Normal'.toUpperCase() }</Text>
+            <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Normal'.toUpperCase() }</Text>
           </Button>
           <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
-            <Text style={{ color: "#4B4B4B"}}>{ 'Cancle'.toUpperCase() }</Text>
+            <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Cancle'.toUpperCase() }</Text>
           </Button>
         </View>
       )
@@ -303,15 +314,18 @@ export default class Example extends React.Component {
           </ScrollView>
         </List>
       )
-    } else {
+    } else if(option == 4) {
       return (
         <DatePicker 
           date={new Date()}
+          mode={'date'}
           onDateChange={() => {
 
           }}
         />
       )
+    } else {
+      return null
     }
   }
 
@@ -342,6 +356,9 @@ export default class Example extends React.Component {
         />
         <Modal isVisible={this.state.show}>
           <View style={styles.modalContent}>
+            <Button transparent style={{ position: 'absolute', right: 0, top: 0, }}>
+              <Icon name='close' style={{ color: "#4B4B4B", fontSize: 35,  }} />
+            </Button>
               <View style={{ padding: 15 }}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, }}>
                   <SvgUri
@@ -388,7 +405,45 @@ export default class Example extends React.Component {
           </View>
           <Button full success style={{ backgroundColor: "#FF006F", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, padding: 0, margin: 0, }}>
               <Text>ADD (+0.75 / MO)</Text>
-          </Button>
+          </Button> 
+
+          {/* <View style={styles.modalContent}>
+            <Button transparent style={{ position: 'absolute', left: 0, top: 0, }}>
+              <Icon name='arrow-back' style={{ color: "#4B4B4B", }} />
+            </Button>
+              <View style={{ padding: 15 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 15, marginTop: 10, }}>
+                  <View style={{ padding: 5 }}>
+                    <Text style={{ color: "#4B4B4B", fontSize: 15, fontWeight: 'bold' }} >IMPORTANT</Text>
+                  </View>
+                </View>
+                <View style={{ flexDirection: "row", padding: 10, width: '100%', }}>
+                  <SvgUri
+                    style={{ paddingRight: 18, paddingTop: 5, }}
+                    width="20"
+                    height="20"
+                    source={require('./images/phone.svg')}
+                  />
+                  <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', }}>Taylor Swift Reputation Stadium a Tour with special guests Camlia Cabello and CharliXOX</Text>
+                  </View>
+                </View>
+                <View style={{ flexDirection: "row", padding: 10, width: '100%', }}>
+                  <SvgUri
+                    style={{ paddingRight: 18, paddingTop: 5, }}
+                    width="20"
+                    height="20"
+                    source={require('./images/location.svg')} 
+                  />
+                  <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', }}>Taylor Alison Swift (born December 13, 1989) is an American singer-songwriter</Text>
+                  </View>
+                </View>
+              </View>
+          </View>
+          <Button full light style={{ backgroundColor: "#F8F8F8", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
+              <Text style={{ color: "#4B4B4B", fontSize: 14, }} >GOT IT</Text>
+          </Button>  */}
         </Modal>
       </Container>
     );
