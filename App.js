@@ -214,7 +214,7 @@ export default class Example extends React.Component {
   }
 
   renderInputToolbar = (props) => {
-    const option = 1
+    const option = 2
     if(option == 1) {
       return (
         <View style={styles.footer}>
@@ -240,7 +240,7 @@ export default class Example extends React.Component {
   }
 
   renderChatFooter(props) {
-    const option = 6
+    const option = 5
     if(option == 1) {
       return (
         <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
@@ -319,6 +319,7 @@ export default class Example extends React.Component {
         <DatePicker 
           date={new Date()}
           mode={'date'}
+          style={{ width: '100%' }}
           onDateChange={() => {
 
           }}
