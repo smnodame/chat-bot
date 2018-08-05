@@ -327,6 +327,7 @@ export default class Example extends React.Component {
     } else if(option == 5) {
       return (
         <View style={{ backgroundColor: "#F2F2F2" }}>
+          <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>Add Others To Your Policy</Text>
           <Card style={{ margin: 10 }}>
               <CardItem style={{ flexDirection: "row" }}>
                 <View style={{ flex: 1, paddingRight: 10, }}>
