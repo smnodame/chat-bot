@@ -66,7 +66,18 @@ const config = {
     {
       id: '5',
       message: 'What number I am thinking?',
-    }
+      trigger: '6',
+    },
+    {
+      id: '6',
+      user: true,
+      input: {
+        mode: 'INPUT',
+        textinput: {
+          placeholder: 'FUCK ...',
+        },
+      }
+    },
   ]
 }
 
