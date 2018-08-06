@@ -17,6 +17,8 @@ import Modal from 'react-native-modal'
 import SvgUri from 'react-native-svg-uri'
 import DatePicker from 'react-native-date-picker-x'
 
+import TextInput from './component/textinput'
+
 console.disableYellowBox = true
 
 const config = {
@@ -241,24 +243,7 @@ export default class Example extends React.Component {
     const mode = _.get(this.state, 'current_question.input.mode', null)
     if(mode == "INPUT") {
       return (
-        <View style={styles.footer}>
-          <Item regular style={[styles.textInput]}>
-              <Input style={{ fontSize: 15 }} ref={'chatInputRef'}  returnKeyType={'send'} 
-                blurOnSubmit={false} value={this.state.text} onChangeText={(text) => this.setState({text})} 
-                placeholderTextColor={'#999'} placeholder={'ADD A MESSAGE ...'}
-                {..._.get(input, 'textinput', {})} />
-          </Item>
-          <TouchableOpacity 
-            disabled={!this.state.text}
-            onPress={() => {
-              this.onSend({
-                text: this.state.text,
-              })
-            }} 
-            style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
-              <Icon ios='md-send' android="md-send" style={{fontSize: 30, color: '#FF006F'}}/>
-          </TouchableOpacity>
-      </View>
+        <TextInput onFinish={this.onSend} input={_.get(input, 'textinput')} />
       )
     } else if(mode == 2) {
       return (
