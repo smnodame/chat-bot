@@ -214,7 +214,7 @@ export default class Example extends React.Component {
   }
 
   renderInputToolbar = (props) => {
-    const option = 2
+    const option = 1
     if(option == 1) {
       return (
         <View style={styles.footer}>
@@ -223,8 +223,24 @@ export default class Example extends React.Component {
                 blurOnSubmit={false} value={this.state.text} onChangeText={(text) => this.setState({text})} 
                 placeholder="ADD A MESSAGE ..." placeholderTextColor={'#999'} />
           </Item>
-          <TouchableOpacity onPress={() => this.setState({ show: true })} style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
-            <Icon ios='md-send' android="md-farward" style={{fontSize: 30, color: '#FF006F'}}/>
+          <TouchableOpacity 
+            disabled={!this.state.text}
+            onPress={() => {
+            this.setState((previousState) => {
+              return {
+                messages: GiftedChat.append(previousState.messages, {
+                  _id: Math.round(Math.random() * 1000000),
+                  text: this.state.text,
+                  createdAt: new Date(),
+                  user: {
+                    _id: 1,
+                  }
+                }),
+                text: '',
+              }
+            })
+          }} style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
+            <Icon ios='md-send' android="md-send" style={{fontSize: 30, color: '#FF006F'}}/>
           </TouchableOpacity>
       </View>
       )
@@ -236,11 +252,13 @@ export default class Example extends React.Component {
           </Button>
         </View>
       )
+    } else {
+      return null
     }
   }
 
   renderChatFooter(props) {
-    const option = 5
+    const option = 7
     if(option == 1) {
       return (
         <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
@@ -579,6 +597,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     padding: 10,
+    paddingTop: 8,
     backgroundColor: '#f2f2f2'
   },
   modalContent: {
