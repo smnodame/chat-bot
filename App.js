@@ -58,7 +58,8 @@ const config = {
           type: 'number',
           min: 0,
           max: 100,
-          placeholder: 'ADD SOME FUCKING WORD ...'
+          placeholder: 'ADD SOME FUCKING WORD ...',
+          keyboardType: 'number-pad'
         },
       }
     },
@@ -154,7 +155,10 @@ export default class Example extends React.Component {
       }
     })
 
-    this.botAnswer(messages)
+    const current_question = this.state.current_question
+    if(current_question.hasOwnProperty('trigger')) {
+      this.runMessage(current_question.trigger)
+    }
   }
 
   botAnswer(messages) {
