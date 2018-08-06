@@ -1,4 +1,5 @@
-import React from 'react';
+import _ from 'lodash'
+import React from 'react'
 import {
   Platform,
   StyleSheet,
@@ -7,162 +8,184 @@ import {
   TouchableOpacity,
   Switch,
   DatePickerIOS,
-} from 'react-native';
-import {GiftedChat, Actions, Bubble, SystemMessage, InputToolBar, Send, } from 'react-native-gifted-chat';
-import CustomActions from './screens/CustomActions';
-import CustomView from './screens/CustomView';
-import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, Item, Input, Card, CardItem, } from 'native-base';
-import Modal from 'react-native-modal';
-import SvgUri from 'react-native-svg-uri';
+} from 'react-native'
+import {GiftedChat, Actions, Bubble, SystemMessage, InputToolBar, Send, } from 'react-native-gifted-chat'
+import CustomActions from './screens/CustomActions'
+import CustomView from './screens/CustomView'
+import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, Item, Input, Card, CardItem, } from 'native-base'
+import Modal from 'react-native-modal'
+import SvgUri from 'react-native-svg-uri'
 import DatePicker from 'react-native-date-picker-x'
 
+console.disableYellowBox = true
+
+const config = {
+  start_id: '1',
+  bot: {
+    name: 'Clave Host',
+    _id: 2
+  },
+  steps: [
+    {
+      id: '1',
+      message: 'What number I am thinking?',
+      trigger: '2',
+    },
+    {
+      id: '2',
+      message: 'Awesome! You are a telepath!',
+      trigger: '3',
+      image: 'http://smnodame.com/public/profile.jpg',
+    },
+    {
+      id: '3',
+      message: 'Nice place!',
+      location: {
+        latitude: 48.864601,
+        longitude: 2.398704
+      },
+      trigger: '4'
+    },
+    {
+      id: '4',
+      user: true,
+      trigger: '5',
+      input: {
+        mode: 'INPUT',
+        textinput: {
+          type: 'number',
+          min: 0,
+          max: 100,
+          placeholder: 'ADD SOME FUCKING WORD ...'
+        },
+      }
+    },
+    {
+      id: '5',
+      message: 'What number I am thinking?',
+    }
+  ]
+}
 
 export default class Example extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       messages: [],
-      loadEarlier: true,
       typingText: null,
-      isLoadingEarlier: false,
-    };
+      current_question: null
+    }
 
-    this._isMounted = false;
-    this.onSend = this.onSend.bind(this);
-    this.onReceive = this.onReceive.bind(this);
-    this.renderCustomActions = this.renderCustomActions.bind(this);
-    this.renderBubble = this.renderBubble.bind(this);
-    this.renderSystemMessage = this.renderSystemMessage.bind(this);
-    this.renderFooter = this.renderFooter.bind(this);
-    this.onLoadEarlier = this.onLoadEarlier.bind(this);
-
-    this._isAlright = null;
+    this.getHeightFooter = this.getHeightFooter.bind(this)
+    this.onSend = this.onSend.bind(this)
+    this.onReceive = this.onReceive.bind(this)
+    this.renderBubble = this.renderBubble.bind(this)
+    this.renderSystemMessage = this.renderSystemMessage.bind(this)
+    this.renderFooter = this.renderFooter.bind(this)
+    
+    this._isAlright = null
   }
 
   async componentWillMount() {
-    this._isMounted = true;
-    this.setState(() => {
-      return {
-        messages: require('./data/messages.js'),
-      };
-    });
-
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-    });
+    })
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
   }
 
-  onLoadEarlier() {
-    this.setState((previousState) => {
-      return {
-        isLoadingEarlier: true,
-      };
-    });
+  componentDidMount() {
+    this.runMessage(config.start_id || '1')
+  }
+
+  runMessage = (id) => {
+    this.setState(previousState => ({
+      typingText: `${config.bot.name} is typing ...`,
+    }))
 
     setTimeout(() => {
-      if (this._isMounted === true) {
-        this.setState((previousState) => {
-          return {
-            messages: GiftedChat.prepend(previousState.messages, require('./data/old_messages.js')),
-            loadEarlier: false,
-            isLoadingEarlier: false,
-          };
-        });
-      }
-    }, 1000); // simulating network
-  }
-
-  onSend(messages = []) {
-    this.setState((previousState) => {
-      return {
-        messages: GiftedChat.append(previousState.messages, messages),
-      };
-    });
-
-    // for demo purpose
-    this.answerDemo(messages);
-  }
-
-  answerDemo(messages) {
-    if (messages.length > 0) {
-      if ((messages[0].image || messages[0].location) || !this._isAlright) {
-        this.setState((previousState) => {
-          return {
-            typingText: 'React Native is typing'
-          };
-        });
-      }
-    }
-
-    setTimeout(() => {
-      if (this._isMounted === true) {
-        if (messages.length > 0) {
-          if (messages[0].image) {
-            this.onReceive('Nice picture!');
-          } else if (messages[0].location) {
-            this.onReceive('My favorite place');
-          } else {
-            if (!this._isAlright) {
-              this._isAlright = true;
-              this.onReceive('Alright');
-            }
-          }
-        }
-      }
+      const question = config.steps.find((question) => question.id == id)
+      
+      this.setState(previousState => ({
+        current_question: question,
+      }))
 
       this.setState((previousState) => {
         return {
           typingText: null,
-        };
-      });
-    }, 1000);
+        }
+      })
+
+      if(question.hasOwnProperty('input')) {
+        return
+      }
+
+      this.onReceive({
+        text: question.message,
+        location: question.location || null,
+        image: question.image || null
+      })
+      
+      if(question.hasOwnProperty('trigger')) {
+        this.runMessage(question.trigger)
+      }
+    }, 1000)
   }
 
-  onReceive(text) {
+  onSend(data) {
+    const messages = [
+      {
+          _id: Math.round(Math.random() * 1000000),
+          createdAt: new Date(),
+          user: {
+            _id: 1,
+          },
+          ...data
+      }
+    ]
+    this.setState((previousState) => {
+      return {
+        messages: GiftedChat.append(previousState.messages, messages),
+        text: null
+      }
+    })
+
+    this.botAnswer(messages)
+  }
+
+  botAnswer(messages) {
+    this.setState((previousState) => {
+      return {
+        typingText: `${config.bot.name} is typing ...`
+      }
+    })
+
+    setTimeout(() => {
+      this.onReceive({
+        text: 'Alright!'
+      })
+
+      this.setState((previousState) => {
+        return {
+          typingText: null,
+        }
+      })
+    }, 1000)
+  }
+
+  onReceive(data) {
     this.setState((previousState) => {
       return {
         messages: GiftedChat.append(previousState.messages, {
           _id: Math.round(Math.random() * 1000000),
-          text: text,
           createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            // avatar: 'https://facebook.github.io/react/img/logo_og.png',
-          },
+          user: config.bot,
+          ...data
         }),
-      };
-    });
-  }
-
-  renderCustomActions(props) {
-    if (Platform.OS === 'ios') {
-      return (
-        <CustomActions
-          {...props}
-        />
-      );
-    }
-    const options = {
-      'Action 1': (props) => {
-        alert('option 1');
-      },
-      'Action 2': (props) => {
-        alert('option 2');
-      },
-      'Cancel': () => {},
-    };
-    return (
-      <Actions
-        {...props}
-        options={options}
-      />
-    );
+      }
+    })
   }
 
   renderBubble(props) {
@@ -175,7 +198,7 @@ export default class Example extends React.Component {
           }
         }}
       />
-    );
+    )
   }
 
   renderSystemMessage(props) {
@@ -189,7 +212,7 @@ export default class Example extends React.Component {
           fontSize: 14,
         }}
       />
-    );
+    )
   }
 
   renderCustomView(props) {
@@ -197,7 +220,7 @@ export default class Example extends React.Component {
       <CustomView
         {...props}
       />
-    );
+    )
   }
 
   renderFooter(props) {
@@ -208,43 +231,36 @@ export default class Example extends React.Component {
             {this.state.typingText}
           </Text>
         </View>
-      );
+      )
     }
-    return null;
+    return null
   }
 
   renderInputToolbar = (props) => {
-    const option = 1
-    if(option == 1) {
+    const input = _.get(this.state, 'current_question.input', null)
+    const mode = _.get(this.state, 'current_question.input.mode', null)
+    if(mode == "INPUT") {
       return (
         <View style={styles.footer}>
           <Item regular style={[styles.textInput]}>
               <Input style={{ fontSize: 15 }} ref={'chatInputRef'}  returnKeyType={'send'} 
                 blurOnSubmit={false} value={this.state.text} onChangeText={(text) => this.setState({text})} 
-                placeholder="ADD A MESSAGE ..." placeholderTextColor={'#999'} />
+                placeholderTextColor={'#999'} placeholder={'ADD A MESSAGE ...'}
+                {..._.get(input, 'textinput', {})} />
           </Item>
           <TouchableOpacity 
             disabled={!this.state.text}
             onPress={() => {
-            this.setState((previousState) => {
-              return {
-                messages: GiftedChat.append(previousState.messages, {
-                  _id: Math.round(Math.random() * 1000000),
-                  text: this.state.text,
-                  createdAt: new Date(),
-                  user: {
-                    _id: 1,
-                  }
-                }),
-                text: '',
-              }
-            })
-          }} style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
-            <Icon ios='md-send' android="md-send" style={{fontSize: 30, color: '#FF006F'}}/>
+              this.onSend({
+                text: this.state.text,
+              })
+            }} 
+            style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
+              <Icon ios='md-send' android="md-send" style={{fontSize: 30, color: '#FF006F'}}/>
           </TouchableOpacity>
       </View>
       )
-    } else if(option == 2) {
+    } else if(mode == 2) {
       return (
         <View style={[styles.footer, { padding: 0, marginBottom: 0, }]}>
           <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, margin: 0, padding: 0, flex: 1, height: 60, }}>
@@ -257,9 +273,13 @@ export default class Example extends React.Component {
     }
   }
 
+  getHeightFooter() {
+    return _.get(this.state, 'current_question.input.mode', null)? 60 : 60
+  }
+
   renderChatFooter(props) {
-    const option = 7
-    if(option == 1) {
+    const mode = 7
+    if(mode == 1) {
       return (
         <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
           <ScrollView>
@@ -290,7 +310,7 @@ export default class Example extends React.Component {
           </ScrollView>
         </List>
       )
-    } else if(option == 2) {
+    } else if(mode == 2) {
       return (
         <View style={{ flexDirection: "row" }}>
           <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
@@ -304,7 +324,7 @@ export default class Example extends React.Component {
           </Button>
         </View>
       )
-    } else if(option == 3) {
+    } else if(mode == 3) {
       return (
         <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
           <ScrollView>
@@ -332,7 +352,7 @@ export default class Example extends React.Component {
           </ScrollView>
         </List>
       )
-    } else if(option == 4) {
+    } else if(mode == 4) {
       return (
         <DatePicker 
           date={new Date()}
@@ -343,7 +363,7 @@ export default class Example extends React.Component {
           }}
         />
       )
-    } else if(option == 5) {
+    } else if(mode == 5) {
       return (
         <View style={{ backgroundColor: "#F2F2F2" }}>
           <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>Add Others To Your Policy</Text>
@@ -365,7 +385,7 @@ export default class Example extends React.Component {
           </Card>
         </View>
       )
-    } else if(option == 6) {
+    } else if(mode == 6) {
       return (
         <View style={{ backgroundColor: "#F2F2F2" }}>
           <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>Coverage Amounts</Text>
@@ -425,19 +445,15 @@ export default class Example extends React.Component {
         <GiftedChat
           messages={this.state.messages}
           onSend={this.onSend}
-          loadEarlier={this.state.loadEarlier}
-          onLoadEarlier={this.onLoadEarlier}
           renderChatFooter={this.renderChatFooter}
-          isLoadingEarlier={this.state.isLoadingEarlier}
           renderInputToolbar={this.renderInputToolbar}
-          minInputToolbarHeight={60}
+          minInputToolbarHeight={this.getHeightFooter()}
           alwaysShowSend={true}
 
           user={{
-            _id: 1, // sent messages should have same user._id
+            _id: 1,
           }}
 
-          renderActions={this.renderCustomActions}
           renderBubble={this.renderBubble}
           renderSystemMessage={this.renderSystemMessage}
           renderCustomView={this.renderCustomView}
@@ -566,7 +582,7 @@ export default class Example extends React.Component {
           </Button> 
         </Modal>
       </Container>
-    );
+    )
   }
 }
 
@@ -611,4 +627,4 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 30, color: '#4B4B4B',
   },
-});
+})
