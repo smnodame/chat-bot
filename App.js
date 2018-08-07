@@ -18,6 +18,7 @@ import SvgUri from 'react-native-svg-uri'
 import DatePicker from 'react-native-date-picker-x'
 
 import TextInput from './component/textinput'
+import ButtonQuestion from './component/ButtonQuestion'
 
 console.disableYellowBox = true
 
@@ -87,6 +88,7 @@ const config = {
       message: 'What number I am thinking?',
       input: {
         mode: 'BUTTON',
+        layout: 'vertical',
         options: [{
           label: 'CHIANG MAI',
           value: 'I AM IN CHIANG MAI',
@@ -104,7 +106,7 @@ const config = {
     },
     {
       id: '9',
-      message: 'you choose CHIANG MAI',
+      message: 'you choose Korat',
     },
     {
       id: '10',
@@ -458,34 +460,11 @@ export default class Example extends React.Component {
         <TextInput onFinish={this.onSend} input={_.get(input, 'textinput')} question={this.state.current_question}/>
       )
     } else if(mode == 'BUTTON') {
-      const layout = _.get(input, 'textinput', 'vertical')
-      if(layout == 'holizontal') {
         return (
-          <ScrollView>
-            {
-              input.options.map((option) => (
-                <Button full light style={{ backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
-                  <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ option.label.toUpperCase() }</Text>
-                </Button>
-              ))
-            }
-          </ScrollView>
+          <ButtonQuestion onSend={this.onSend} question={this.state.current_question} />
         )
-      } else {
-        return (
-          <View style={{ flexDirection: 'row' }}>
-            {
-              input.options.map((option) => (
-                <Button full light onPress={() => this.onSend({ text: option.value }, option.trigger)} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
-                  <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ option.label.toUpperCase() }</Text>
-                </Button>
-              ))
-            }
-          </View>
-        )
-      }
     } else {
-      return null
+      return <View style={{ height: 15 }} />
     }
   }
 
