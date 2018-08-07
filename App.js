@@ -89,16 +89,31 @@ const config = {
         mode: 'BUTTON',
         options: [{
           label: 'CHIANG MAI',
-          value: 'I AM IN CHIANG MAI'
+          value: 'I AM IN CHIANG MAI',
+          trigger: '9',
         }, {
           label: 'BANGKOK',
-          value: 'I AM IN BANGKOK'
+          value: 'I AM IN BANGKOK',
+          trigger: '10',
         }, {
           label: 'KORAT',
-          value: 'I AM IN KORAT'
+          value: 'I AM IN KORAT',
+          trigger: '11',
         }]
       }
     },
+    {
+      id: '9',
+      message: 'you choose CHIANG MAI',
+    },
+    {
+      id: '10',
+      message: 'you choose BANGKOK',
+    },
+    {
+      id: '11',
+      message: 'you choose Korat',
+    }
   ]
 }
 
@@ -168,7 +183,7 @@ export default class Example extends React.Component {
     }, 1000)
   }
 
-  onSend(data) {
+  onSend(data, trigger) {
     const messages = [
       {
           _id: Math.round(Math.random() * 1000000),
@@ -186,9 +201,9 @@ export default class Example extends React.Component {
       }
     })
 
-    const current_question = this.state.current_question
-    if(current_question.hasOwnProperty('trigger')) {
-      this.runMessage(current_question.trigger)
+    
+    if(trigger) {
+      this.runMessage(trigger)
     }
   }
 
@@ -277,7 +292,7 @@ export default class Example extends React.Component {
    return null
   }
 
-  renderChatFooter = (props) => {
+  renderChatFooter = () => {
     // const mode = 7
     // if(mode == 1) {
     //   return (
@@ -440,23 +455,46 @@ export default class Example extends React.Component {
     const mode = _.get(this.state, 'current_question.input.mode', null)
     if(mode == "INPUT") {
       return (
-        <TextInput onFinish={this.onSend} input={_.get(input, 'textinput')} />
+        <TextInput onFinish={this.onSend} input={_.get(input, 'textinput')} question={this.state.current_question}/>
       )
     } else if(mode == 'BUTTON') {
-      return (
-        <View style={{ flexDirection: "row" }}>
-          {
-            input.options.map((option) => (
-              <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
-                <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ option.label.toUpperCase() }</Text>
-              </Button>
-            ))
-          }
-        </View>
-      )
+      const layout = _.get(input, 'textinput', 'vertical')
+      if(layout == 'holizontal') {
+        return (
+          <ScrollView>
+            {
+              input.options.map((option) => (
+                <Button full light style={{ backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
+                  <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ option.label.toUpperCase() }</Text>
+                </Button>
+              ))
+            }
+          </ScrollView>
+        )
+      } else {
+        return (
+          <View style={{ flexDirection: 'row' }}>
+            {
+              input.options.map((option) => (
+                <Button full light onPress={() => this.onSend({ text: option.value }, option.trigger)} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
+                  <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ option.label.toUpperCase() }</Text>
+                </Button>
+              ))
+            }
+          </View>
+        )
+      }
     } else {
       return null
     }
+  }
+
+  renderContainerFooter = () => {
+    return (
+      <View  style={{ maxHeight: '40%' }}>
+        { this.renderChatFooter() }
+      </View>
+    )
   }
 
   render() {
@@ -466,7 +504,7 @@ export default class Example extends React.Component {
         <GiftedChat
           messages={this.state.messages}
           onSend={this.onSend}
-          renderChatFooter={this.renderChatFooter}
+          renderChatFooter={this.renderContainerFooter}
           renderInputToolbar={this.renderInputToolbar}
           minInputToolbarHeight={0}
           alwaysShowSend={true}

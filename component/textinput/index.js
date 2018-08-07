@@ -35,7 +35,7 @@ export default class TextInput extends React.Component {
                 onPress={() => {
                     props.onFinish({
                         text: this.state.text,
-                    })
+                    }, props.question.trigger)
                     this.setState({
                         text: ''
                     })
