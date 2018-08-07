@@ -50,7 +50,6 @@ const config = {
     },
     {
       id: '4',
-      user: true,
       trigger: '5',
       input: {
         mode: 'INPUT',
@@ -70,12 +69,34 @@ const config = {
     },
     {
       id: '6',
-      user: true,
       input: {
         mode: 'INPUT',
         textinput: {
           placeholder: 'FUCK ...',
         },
+      },
+      trigger: '7',
+    },
+    {
+      id: '7',
+      message: 'I AM OK?',
+      trigger: '8',
+    },
+    {
+      id: '8',
+      message: 'What number I am thinking?',
+      input: {
+        mode: 'BUTTON',
+        options: [{
+          label: 'CHIANG MAI',
+          value: 'I AM IN CHIANG MAI'
+        }, {
+          label: 'BANGKOK',
+          value: 'I AM IN BANGKOK'
+        }, {
+          label: 'KORAT',
+          value: 'I AM IN KORAT'
+        }]
       }
     },
   ]
@@ -90,7 +111,6 @@ export default class Example extends React.Component {
       current_question: null
     }
 
-    this.getHeightFooter = this.getHeightFooter.bind(this)
     this.onSend = this.onSend.bind(this)
     this.onReceive = this.onReceive.bind(this)
     this.renderBubble = this.renderBubble.bind(this)
@@ -254,183 +274,184 @@ export default class Example extends React.Component {
   }
 
   renderInputToolbar = (props) => {
+   return null
+  }
+
+  renderChatFooter = (props) => {
+    // const mode = 7
+    // if(mode == 1) {
+    //   return (
+    //     <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
+    //       <ScrollView>
+    //       <ListItem>
+    //         <CheckBox checked={false} color="green" />
+    //         <Body>
+    //           <Text>Simon Mignolet</Text>
+    //         </Body>
+    //         <Right>
+    //         </Right>
+    //       </ListItem>
+    //       <ListItem>
+    //         <CheckBox checked={false} color="green" />
+    //         <Body>
+    //           <Text>Nathaniel Clyne</Text>
+    //         </Body>
+    //         <Right>
+    //         </Right>
+    //       </ListItem>
+    //       <ListItem>
+    //         <CheckBox checked={true} color="green" />
+    //         <Body>
+    //           <Text>Daily Stand Up</Text>
+    //         </Body>
+    //         <Right>
+    //         </Right>
+    //       </ListItem>
+    //       </ScrollView>
+    //     </List>
+    //   )
+    // } else if(mode == 2) {
+    //   return (
+    //     <View style={{ flexDirection: "row" }}>
+    //       <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
+    //         <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Confirm'.toUpperCase() }</Text>
+    //       </Button>
+    //       <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
+    //         <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Normal'.toUpperCase() }</Text>
+    //       </Button>
+    //       <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
+    //         <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Cancle'.toUpperCase() }</Text>
+    //       </Button>
+    //     </View>
+    //   )
+    // } else if(mode == 3) {
+    //   return (
+    //     <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
+    //       <ScrollView>
+    //       <ListItem>
+    //         <Left>
+    //           <Text>Simon Mignolet</Text>
+    //         </Left>
+    //         <Right>
+    //         </Right>
+    //       </ListItem>
+    //       <ListItem>
+    //         <Left>
+    //           <Text>Nathaniel Clyne</Text>
+    //         </Left>
+    //         <Right>
+    //         </Right>
+    //       </ListItem>
+    //       <ListItem>
+    //         <Left>
+    //           <Text>Daily Stand Up</Text>
+    //         </Left>
+    //         <Right>
+    //         </Right>
+    //       </ListItem>
+    //       </ScrollView>
+    //     </List>
+    //   )
+    // } else if(mode == 4) {
+    //   return (
+    //     <DatePicker 
+    //       date={new Date()}
+    //       mode={'date'}
+    //       style={{ width: '100%' }}
+    //       onDateChange={() => {
+
+    //       }}
+    //     />
+    //   )
+    // } else if(mode == 5) {
+    //   return (
+    //     <View style={{ backgroundColor: "#F2F2F2" }}>
+    //       <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>Add Others To Your Policy</Text>
+    //       <Card style={{ margin: 10 }}>
+    //           <CardItem style={{ flexDirection: "row" }}>
+    //             <View style={{ flex: 1, paddingRight: 10, }}>
+    //               <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: "500", marginBottom: 10, }}>
+    //                 Taylor Swift
+    //               </Text>
+    //               <Text style={{ color: "#CCC", fontSize: 12, fontWeight: "500", }}>
+    //                 Taylor Alison Swift is an American singer-songwriter. One of the world's leading contemporary recording artists,
+    //               </Text>
+    //             </View>
+    //             <View style={{ height: "100%", alignItems: 'center', }}>
+    //               <Switch style={{ marginBottom: 15 }} />
+    //               <Text style={{ color: "#999", fontSize: 12, fontWeight: "bold",  }} >+$1.67/MO</Text>
+    //             </View>
+    //           </CardItem>
+    //       </Card>
+    //     </View>
+    //   )
+    // } else if(mode == 6) {
+    //   return (
+    //     <View style={{ backgroundColor: "#F2F2F2" }}>
+    //       <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>Coverage Amounts</Text>
+    //       <Card style={{ margin: 10 }}>
+    //           <CardItem style={{ flexDirection: "row" }}>
+    //           <View style={{ padding: 5 }}>
+    //             <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, }}>
+    //               <SvgUri
+    //                 width="60"
+    //                 height="60"
+    //                 source={require('./images/hamberger.svg')}
+    //               />
+    //             </View>
+    //             <View>
+    //               <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 16, fontWeight: 'bold' }}>
+    //                 Gran Torino (2008)
+    //               </Text>
+    //             </View> 
+                
+    //             <View
+    //                 style={{
+    //                     flexDirection: 'row',
+    //                     justifyContent: 'center',
+    //                     alignItems: 'center',
+    //                 }}>
+
+    //                 <Button transparent>
+    //                     <Icon name="ios-remove-circle-outline" style={styles.icon}/>
+    //                 </Button>
+    //                 <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#4B4B4B', textAlign: "center", flex: 1, }}>
+    //                   $ 10000
+    //                 </Text>
+    //                 <Button transparent
+    //                 >
+    //                     <Icon name="ios-add-circle-outline" style={styles.icon}/>
+    //                 </Button>
+    //             </View>
+    //             <View style={{ marginBottom: 10 }}>
+    //               <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 14 }}>
+    //                 Drama .... Angelina Jolie at an event for Gran Torino (2008) Alison Eastwood at an event for Gran Torino (2008)
+    //               </Text>
+    //             </View> 
+    //           </View>
+    //           </CardItem>
+    //       </Card>
+    //     </View>
+    //   )
+    // } else {
+    //   return null
+    // }
     const input = _.get(this.state, 'current_question.input', null)
     const mode = _.get(this.state, 'current_question.input.mode', null)
     if(mode == "INPUT") {
       return (
         <TextInput onFinish={this.onSend} input={_.get(input, 'textinput')} />
       )
-    } else if(mode == 2) {
-      return (
-        <View style={[styles.footer, { padding: 0, marginBottom: 0, }]}>
-          <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, margin: 0, padding: 0, flex: 1, height: 60, }}>
-            <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Confirm'.toUpperCase() }</Text>
-          </Button>
-        </View>
-      )
-    } else {
-      return null
-    }
-  }
-
-  getHeightFooter() {
-    return _.get(this.state, 'current_question.input.mode', null)? 60 : 60
-  }
-
-  renderChatFooter(props) {
-    const mode = 7
-    if(mode == 1) {
-      return (
-        <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
-          <ScrollView>
-          <ListItem>
-            <CheckBox checked={false} color="green" />
-            <Body>
-              <Text>Simon Mignolet</Text>
-            </Body>
-            <Right>
-            </Right>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={false} color="green" />
-            <Body>
-              <Text>Nathaniel Clyne</Text>
-            </Body>
-            <Right>
-            </Right>
-          </ListItem>
-          <ListItem>
-            <CheckBox checked={true} color="green" />
-            <Body>
-              <Text>Daily Stand Up</Text>
-            </Body>
-            <Right>
-            </Right>
-          </ListItem>
-          </ScrollView>
-        </List>
-      )
-    } else if(mode == 2) {
+    } else if(mode == 'BUTTON') {
       return (
         <View style={{ flexDirection: "row" }}>
-          <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
-            <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Confirm'.toUpperCase() }</Text>
-          </Button>
-          <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
-            <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Normal'.toUpperCase() }</Text>
-          </Button>
-          <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#F0F0F0", borderWidth: 1, }}>
-            <Text style={{ color: "#4B4B4B", fontSize: 14, }}>{ 'Cancle'.toUpperCase() }</Text>
-          </Button>
-        </View>
-      )
-    } else if(mode == 3) {
-      return (
-        <List style={{ backgroundColor: "#F8F8F8", maxHeight: '40%' }}>
-          <ScrollView>
-          <ListItem>
-            <Left>
-              <Text>Simon Mignolet</Text>
-            </Left>
-            <Right>
-            </Right>
-          </ListItem>
-          <ListItem>
-            <Left>
-              <Text>Nathaniel Clyne</Text>
-            </Left>
-            <Right>
-            </Right>
-          </ListItem>
-          <ListItem>
-            <Left>
-              <Text>Daily Stand Up</Text>
-            </Left>
-            <Right>
-            </Right>
-          </ListItem>
-          </ScrollView>
-        </List>
-      )
-    } else if(mode == 4) {
-      return (
-        <DatePicker 
-          date={new Date()}
-          mode={'date'}
-          style={{ width: '100%' }}
-          onDateChange={() => {
-
-          }}
-        />
-      )
-    } else if(mode == 5) {
-      return (
-        <View style={{ backgroundColor: "#F2F2F2" }}>
-          <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>Add Others To Your Policy</Text>
-          <Card style={{ margin: 10 }}>
-              <CardItem style={{ flexDirection: "row" }}>
-                <View style={{ flex: 1, paddingRight: 10, }}>
-                  <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: "500", marginBottom: 10, }}>
-                    Taylor Swift
-                  </Text>
-                  <Text style={{ color: "#CCC", fontSize: 12, fontWeight: "500", }}>
-                    Taylor Alison Swift is an American singer-songwriter. One of the world's leading contemporary recording artists,
-                  </Text>
-                </View>
-                <View style={{ height: "100%", alignItems: 'center', }}>
-                  <Switch style={{ marginBottom: 15 }} />
-                  <Text style={{ color: "#999", fontSize: 12, fontWeight: "bold",  }} >+$1.67/MO</Text>
-                </View>
-              </CardItem>
-          </Card>
-        </View>
-      )
-    } else if(mode == 6) {
-      return (
-        <View style={{ backgroundColor: "#F2F2F2" }}>
-          <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>Coverage Amounts</Text>
-          <Card style={{ margin: 10 }}>
-              <CardItem style={{ flexDirection: "row" }}>
-              <View style={{ padding: 5 }}>
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, }}>
-                  <SvgUri
-                    width="60"
-                    height="60"
-                    source={require('./images/hamberger.svg')}
-                  />
-                </View>
-                <View>
-                  <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 16, fontWeight: 'bold' }}>
-                    Gran Torino (2008)
-                  </Text>
-                </View> 
-                
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-
-                    <Button transparent>
-                        <Icon name="ios-remove-circle-outline" style={styles.icon}/>
-                    </Button>
-                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#4B4B4B', textAlign: "center", flex: 1, }}>
-                      $ 10000
-                    </Text>
-                    <Button transparent
-                    >
-                        <Icon name="ios-add-circle-outline" style={styles.icon}/>
-                    </Button>
-                </View>
-                <View style={{ marginBottom: 10 }}>
-                  <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 14 }}>
-                    Drama .... Angelina Jolie at an event for Gran Torino (2008) Alison Eastwood at an event for Gran Torino (2008)
-                  </Text>
-                </View> 
-              </View>
-              </CardItem>
-          </Card>
+          {
+            input.options.map((option) => (
+              <Button full light style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
+                <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ option.label.toUpperCase() }</Text>
+              </Button>
+            ))
+          }
         </View>
       )
     } else {
@@ -447,7 +468,7 @@ export default class Example extends React.Component {
           onSend={this.onSend}
           renderChatFooter={this.renderChatFooter}
           renderInputToolbar={this.renderInputToolbar}
-          minInputToolbarHeight={this.getHeightFooter()}
+          minInputToolbarHeight={0}
           alwaysShowSend={true}
 
           user={{

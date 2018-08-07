@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       padding: 10,
       paddingTop: 8,
-      backgroundColor: '#f2f2f2'
+      backgroundColor: '#f2f2f2',
+      height: 60,
     },
     modalContent: {
       backgroundColor: 'white',
