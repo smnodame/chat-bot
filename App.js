@@ -15,10 +15,10 @@ import CustomView from './screens/CustomView'
 import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, Item, Input, Card, CardItem, } from 'native-base'
 import Modal from 'react-native-modal'
 import SvgUri from 'react-native-svg-uri'
-import DatePicker from 'react-native-date-picker-x'
 
 import TextInput from './component/textinput'
 import ButtonQuestion from './component/ButtonQuestion'
+import CalendarQuestion from './component/CalendarQuestion'
 
 console.disableYellowBox = true
 
@@ -58,7 +58,7 @@ const config = {
           type: 'number',
           min: 0,
           max: 100,
-          placeholder: 'ADD SOME FUCKING WORD ...',
+          placeholder: 'ADD SOME WORD ...',
           keyboardType: 'number-pad'
         },
       }
@@ -73,7 +73,7 @@ const config = {
       input: {
         mode: 'INPUT',
         textinput: {
-          placeholder: 'FUCK ...',
+          placeholder: 'เพิ่มคำตอบ',
         },
       },
       trigger: '7',
@@ -106,7 +106,16 @@ const config = {
     },
     {
       id: '9',
-      message: 'you choose Korat',
+      input: {
+        mode: 'CALENDAR',
+        calendar: {
+          mode: 'datetime'
+        },
+        button: {
+          text: 'CHOOSE'
+        }
+      },
+      trigger: '12'
     },
     {
       id: '10',
@@ -115,6 +124,10 @@ const config = {
     {
       id: '11',
       message: 'you choose Korat',
+    },
+    {
+      id: '12',
+      message: 'Thank you for you info!'
     }
   ]
 }
@@ -376,7 +389,6 @@ export default class Example extends React.Component {
     //       mode={'date'}
     //       style={{ width: '100%' }}
     //       onDateChange={() => {
-
     //       }}
     //     />
     //   )
@@ -460,9 +472,13 @@ export default class Example extends React.Component {
         <TextInput onFinish={this.onSend} input={_.get(input, 'textinput')} question={this.state.current_question}/>
       )
     } else if(mode == 'BUTTON') {
-        return (
-          <ButtonQuestion onSend={this.onSend} question={this.state.current_question} />
-        )
+      return (
+        <ButtonQuestion onSend={this.onSend} question={this.state.current_question} />
+      )
+    } else if(mode == 'CALENDAR') {
+      return (
+        <CalendarQuestion onSend={this.onSend} question={this.state.current_question} />
+      )
     } else {
       return <View style={{ height: 15 }} />
     }
@@ -470,7 +486,7 @@ export default class Example extends React.Component {
 
   renderContainerFooter = () => {
     return (
-      <View  style={{ maxHeight: '40%' }}>
+      <View  style={{ maxHeight: '50%' }}>
         { this.renderChatFooter() }
       </View>
     )
