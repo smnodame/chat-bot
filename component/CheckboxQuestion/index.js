@@ -19,11 +19,8 @@ export default class CheckboxQuestion extends React.Component {
       }
     }
 
-    get_message = () => {
-        const options = _.get(this.props.question, 'input.options', [])
-        return options.filter((option, index) => {
-            return this.state[index.toString()]
-        }).reduce((o, n, index) => {
+    get_message = (chosen) => {
+        return chosen.reduce((o, n, index) => {
             return `${o} ${index + 1}. ${n.value}\n`
         }, '')
     }
@@ -34,6 +31,7 @@ export default class CheckboxQuestion extends React.Component {
         const min = _.get(this.props.question, 'input.min', null)
         const max = _.get(this.props.question, 'input.max', null)
         const text = _.get(this.props.question, 'input.button.text', 'SEND')
+        const message_func = _.get(this.props.question, 'input.message_func', this.get_message)
         return (
             <View>
                 <List style={{ backgroundColor: "#F8F8F8", marginBottom: 60 }}>
@@ -68,7 +66,7 @@ export default class CheckboxQuestion extends React.Component {
                             }
                         }
                         this.props.onSend({ 
-                            text: this.get_message()
+                            text: message_func(chosen)
                         }, trigger)
                     }}
                     style={{ backgroundColor: "#F8F8F8", borderColor: "#EEE", height: 60, borderWidth: 0.5, borderTopWidth: 1, position: 'absolute', bottom: 0, flex: 1, width: '100%', }}>

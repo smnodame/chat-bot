@@ -136,6 +136,11 @@ const config = {
       input: {
         min: 1,
         max: 2,
+        message_func: (chosen) => {
+          return chosen.reduce((o, n, index) => {
+              return `${o} ${index + 1}. ${n.value}\n`
+            }, '')
+        },
         mode: 'CHECKBOX',
         options: [{
           label: 'CM',
@@ -150,7 +155,8 @@ const config = {
         button: {
           text: 'CHOOSE'
         },
-      }
+      },
+      trigger: '12',
     }
   ]
 }
