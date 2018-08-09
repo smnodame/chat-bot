@@ -19,6 +19,15 @@ export default class CheckboxQuestion extends React.Component {
       }
     }
 
+    get_message = () => {
+        const options = _.get(this.props.question, 'input.options', [])
+        return options.filter((option, index) => {
+            return this.state[index.toString()]
+        }).reduce((o, n, index) => {
+            return `${o} ${index + 1}. ${n.value}\n`
+        }, '')
+    }
+
     render = () => {
         const trigger = _.get(this.props.question, 'trigger', null)
         const options = _.get(this.props.question, 'input.options', [])
@@ -42,7 +51,11 @@ export default class CheckboxQuestion extends React.Component {
                         
                     </ScrollView>
                 </List>
-                <Button full onPress={() => {}}
+                <Button full onPress={() => {
+                        this.props.onSend({ 
+                            text: this.get_message()
+                        }, trigger)
+                    }}
                     style={{ backgroundColor: "#F8F8F8", borderColor: "#EEE", height: 60, borderWidth: 0.5, borderTopWidth: 1, position: 'absolute', bottom: 0, flex: 1, width: '100%', }}>
                     <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}> { text } </Text>
                 </Button>
