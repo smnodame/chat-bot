@@ -120,6 +120,7 @@ const config = {
     {
       id: '10',
       message: 'you choose BANGKOK',
+      trigger: '13'
     },
     {
       id: '11',
@@ -128,6 +129,12 @@ const config = {
     {
       id: '12',
       message: 'Thank you for you info!'
+    },
+    {
+      id: '13',
+      input: {
+        mode: 'CHECKBOX',
+      }
     }
   ]
 }
@@ -478,6 +485,59 @@ export default class Example extends React.Component {
     } else if(mode == 'CALENDAR') {
       return (
         <CalendarQuestion onSend={this.onSend} question={this.state.current_question} />
+      )
+    } else if(mode == 'CHECKBOX') {
+      return (
+        <View>
+          <List style={{ backgroundColor: "#F8F8F8", marginBottom: 60 }}>
+          <ScrollView>
+          <ListItem>
+          <CheckBox checked={false} color="green" />
+          <Body>
+          <Text>Simon Mignolet</Text>
+          </Body>
+          <Right>
+          </Right>
+          </ListItem>
+          <ListItem>
+          <CheckBox checked={false} color="green" />
+          <Body>
+          <Text>Nathaniel Clyne</Text>
+          </Body>
+          <Right>
+          </Right>
+          </ListItem>
+          <ListItem>
+          <CheckBox checked={true} color="green" />
+          <Body>
+          <Text>Daily Stand Up</Text>
+          </Body>
+          <Right>
+          </Right>
+          </ListItem>
+          <ListItem>
+          <CheckBox checked={true} color="green" />
+          <Body>
+          <Text>Daily Stand Up</Text>
+          </Body>
+          <Right>
+          </Right>
+          </ListItem>
+          <ListItem>
+          <CheckBox checked={true} color="green" />
+          <Body>
+          <Text>Daily Stand Up</Text>
+          </Body>
+          <Right>
+          </Right>
+          </ListItem>
+          </ScrollView>
+          </List>
+          <Button full onPress={() => {}}
+              style={{ backgroundColor: "#F8F8F8", borderColor: "#EEE", height: 60, borderWidth: 0.5, borderTopWidth: 1, position: 'absolute', bottom: 0, flex: 1, width: '100%', }}>
+              <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>CONFIRM</Text>
+          </Button>
+        </View>
       )
     } else {
       return <View style={{ height: 15 }} />
