@@ -134,6 +134,8 @@ const config = {
     {
       id: '13',
       input: {
+        min: 1,
+        max: 2,
         mode: 'CHECKBOX',
         options: [{
           label: 'CM',

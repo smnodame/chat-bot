@@ -31,6 +31,8 @@ export default class CheckboxQuestion extends React.Component {
     render = () => {
         const trigger = _.get(this.props.question, 'trigger', null)
         const options = _.get(this.props.question, 'input.options', [])
+        const min = _.get(this.props.question, 'input.min', null)
+        const max = _.get(this.props.question, 'input.max', null)
         const text = _.get(this.props.question, 'input.button.text', 'SEND')
         return (
             <View>
@@ -52,6 +54,19 @@ export default class CheckboxQuestion extends React.Component {
                     </ScrollView>
                 </List>
                 <Button full onPress={() => {
+                        const chosen = options.filter((option, index) => {
+                            return this.state[index.toString()]
+                        })
+                        if(max) {
+                            if(chosen.length > max) {
+                                return
+                            }
+                        }
+                        if(min) {
+                            if(chosen.length < min) {
+                                return
+                            }
+                        }
                         this.props.onSend({ 
                             text: this.get_message()
                         }, trigger)
