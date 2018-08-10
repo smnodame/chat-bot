@@ -31,6 +31,7 @@ export default class ProductCardQuestion extends React.Component {
         const card_title = _.get(this.props.question, 'input.card.title', '')
         const unit = _.get(this.props.question, 'input.card.unit', '฿')
         const description = _.get(this.props.question, 'input.card.description', '')
+        const increase_number = _.get(this.props.question, 'input.card.increase_number', 1)
         return (
             <View style={{ backgroundColor: "#F2F2F2", paddingBottom: 15, marginBottom: 15, }}>
                 <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>{ grobal_title }</Text>
@@ -57,13 +58,28 @@ export default class ProductCardQuestion extends React.Component {
                                 alignItems: 'center',
                             }}>
 
-                            <Button transparent>
+                            <Button transparent
+                                onPress={() => {
+                                    this.setState((previousState) => {
+                                        return {
+                                            price: previousState.price - increase_number,
+                                        }
+                                    })
+                                }}
+                            >
                                 <Icon name="ios-remove-circle-outline" style={styles.icon}/>
                             </Button>
                             <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#4B4B4B', textAlign: "center", flex: 1, }}>
                             { unit + ' ' + this.state.price }
                             </Text>
                             <Button transparent
+                                onPress={() => {
+                                    this.setState((previousState) => {
+                                        return {
+                                            price: previousState.price + increase_number,
+                                        }
+                                    })
+                                }}
                             >
                                 <Icon name="ios-add-circle-outline" style={styles.icon}/>
                             </Button>
