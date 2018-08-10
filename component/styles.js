@@ -36,8 +36,6 @@ const styles = StyleSheet.create({
     },
     modalContent: {
       backgroundColor: 'white',
-      justifyContent: 'center',
-      alignItems: 'center',
       borderTopRightRadius: 5,
       borderTopLeftRadius: 5,
       borderColor: 'rgba(0, 0, 0, 0.1)',

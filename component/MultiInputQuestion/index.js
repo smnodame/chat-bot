@@ -38,7 +38,7 @@ export default class MultiInputQuestion extends React.Component {
         const button = _.get(this.props.question, 'input.button', {})
 
         return (
-            <Modal isVisible={this.state.show}>
+            <Modal isVisible={this.state.show} avoidKeyboard={true} >
                 <View style={styles.modalContent}>
                     <View style={{ padding: 15, paddingBottom: 5, }}>
                         {
