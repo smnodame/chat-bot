@@ -35,6 +35,7 @@ const config = {
       id: '1',
       message: 'What number I am thinking?',
       trigger: '2',
+      system: true,
     },
     {
       id: '2',
@@ -49,7 +50,7 @@ const config = {
         latitude: 48.864601,
         longitude: 2.398704
       },
-      trigger: '14'
+      trigger: '4'
     },
     {
       id: '4',
@@ -242,7 +243,8 @@ export default class Example extends React.Component {
       this.onReceive({
         text: question.message,
         location: question.location || null,
-        image: question.image || null
+        image: question.image || null,
+        system: question.system || false,
       })
       
       if(question.hasOwnProperty('trigger')) {
@@ -323,15 +325,62 @@ export default class Example extends React.Component {
 
   renderSystemMessage(props) {
     return (
-      <SystemMessage
-        {...props}
-        containerStyle={{
-          marginBottom: 15,
-        }}
-        textStyle={{
-          fontSize: 14,
-        }}
-      />
+      <View>
+        <SystemMessage
+          {...props}
+          containerStyle={{
+            marginBottom: 15,
+          }}
+          textStyle={{
+            fontSize: 14,
+          }}
+        />
+        <View style={{ backgroundColor: "#F2F2F2", paddingBottom: 15, marginBottom: 15, }}>
+          <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>Coverage Amounts</Text>
+          <Card style={{ margin: 10 }}>
+              <CardItem style={{ flexDirection: "row" }}>
+              <View style={{ padding: 5 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, }}>
+                  <SvgUri
+                    width="60"
+                    height="60"
+                    source={require('./images/hamberger.svg')}
+                  />
+                </View>
+                <View>
+                  <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 16, fontWeight: 'bold' }}>
+                  Crabstick Cocktail
+                  </Text>
+                </View> 
+                
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+
+                    <Button transparent>
+                        <Icon name="ios-remove-circle-outline" style={styles.icon}/>
+                    </Button>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#4B4B4B', textAlign: "center", flex: 1, }}>
+                      $ 10000
+                    </Text>
+                    <Button transparent
+                    >
+                        <Icon name="ios-add-circle-outline" style={styles.icon}/>
+                    </Button>
+                </View>
+                <View style={{ marginBottom: 10 }}>
+                  <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 14 }}>
+                  Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available  
+                  </Text>
+                </View> 
+              </View>
+              </CardItem>
+          </Card>
+        </View>
+      </View>
     )
   }
 
@@ -522,7 +571,7 @@ export default class Example extends React.Component {
     const mode = _.get(this.state, 'current_question.input.mode', null)
     if(mode == "INPUT") {
       return (
-        <TextInput onFinish={this.onSend} input={_.get(input, 'textinput')} question={this.state.current_question}/>
+        <TextInputQuestion onFinish={this.onSend} input={_.get(input, 'textinput')} question={this.state.current_question}/>
       )
     } else if(mode == 'BUTTON') {
       return (
