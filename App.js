@@ -20,6 +20,7 @@ import TextInput from './component/textinput'
 import ButtonQuestion from './component/ButtonQuestion'
 import CalendarQuestion from './component/CalendarQuestion'
 import CheckboxQuestion from './component/CheckboxQuestion'
+import MultiInputQuestion from './component/MultiInputQuestion'
 
 console.disableYellowBox = true
 
@@ -48,7 +49,7 @@ const config = {
         latitude: 48.864601,
         longitude: 2.398704
       },
-      trigger: '4'
+      trigger: '14'
     },
     {
       id: '4',
@@ -86,7 +87,6 @@ const config = {
     },
     {
       id: '8',
-      message: 'What number I am thinking?',
       input: {
         mode: 'BUTTON',
         layout: 'vertical',
@@ -157,6 +157,23 @@ const config = {
         },
       },
       trigger: '12',
+    },
+    {
+      id: '14',
+      input: {
+        mode: 'MULTI-INPUT',
+        title: 'Taylor Swift',
+        description: 'Taylor Alison Swift is an American singer-songwriter.',
+        inputs: [{
+          placeholder: 'THIS IS TEXT'
+        }, {
+          placeholder: 'THIS IS NUMBER PAD',
+          keyboardType: 'number-pad'
+        }],
+        button: {
+          text: 'TAKE IT'
+        }
+      }
     }
   ]
 }
@@ -512,6 +529,10 @@ export default class Example extends React.Component {
       return (
         <CheckboxQuestion onSend={this.onSend} question={this.state.current_question} />
       )
+    } else if(mode == 'MULTI-INPUT') {
+      return (
+        <MultiInputQuestion onSend={this.onSend} question={this.state.current_question}/>
+      )
     } else {
       return <View style={{ height: 15 }} />
     }
@@ -546,7 +567,7 @@ export default class Example extends React.Component {
           renderCustomView={this.renderCustomView}
           renderFooter={this.renderFooter}
         />
-        <Modal isVisible={this.state.show}>
+        {/* <Modal isVisible={true}> */}
           {/* <View style={styles.modalContent}>
             <Button transparent style={{ position: 'absolute', right: 0, top: 0, }}>
               <Icon name='close' style={{ color: "#4B4B4B", fontSize: 35,  }} />
@@ -637,7 +658,7 @@ export default class Example extends React.Component {
               <Text style={{ color: "#4B4B4B", fontSize: 14, }} >GOT IT</Text>
           </Button>  */}
 
-          <View style={styles.modalContent}>
+          {/* <View style={styles.modalContent}>
               <Button transparent style={{ position: 'absolute', right: 0, top: 0, }}>
                 <Icon name='close' style={{ color: "#4B4B4B", fontSize: 35,  }} />
               </Button>
@@ -666,8 +687,9 @@ export default class Example extends React.Component {
           </View>
           <Button full light style={{ backgroundColor: "#999", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
               <Text style={{ color: "#FFF", fontSize: 14, fontWeight: "bold", }} >CONFIRM</Text>
-          </Button> 
-        </Modal>
+          </Button>  */}
+        {/* </Modal> */}
+        
       </Container>
     )
   }
