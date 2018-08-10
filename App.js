@@ -145,12 +145,15 @@ const config = {
         options: [{
           label: 'CM',
           value: 'CHIANG MAI',
+          key: 'CM',
         }, {
           label: 'BKK',
           value: 'BANGKOK',
+          key: 'BKK',
         }, {
           label: 'KR',
           value: 'KORAT',
+          key: 'KR',
         }],
         button: {
           text: 'CHOOSE'
@@ -160,20 +163,24 @@ const config = {
     },
     {
       id: '14',
+      message: 'Your text is {TEXT} and number is {NUMBER}',
       input: {
         mode: 'MULTI-INPUT',
         title: 'Taylor Swift',
         description: 'Taylor Alison Swift is an American singer-songwriter.',
         inputs: [{
-          placeholder: 'THIS IS TEXT'
+          placeholder: 'THIS IS TEXT',
+          key: 'TEXT',
         }, {
           placeholder: 'THIS IS NUMBER PAD',
-          keyboardType: 'number-pad'
+          keyboardType: 'number-pad',
+          key: 'NUMBER',
         }],
         button: {
           text: 'TAKE IT'
         }
-      }
+      },
+      trigger: '12',
     }
   ]
 }

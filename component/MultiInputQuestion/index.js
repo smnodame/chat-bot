@@ -16,6 +16,17 @@ import styles from '../styles'
 export default class MultiInputQuestion extends React.Component {
     constructor(props) {
       super(props)
+      this.state = {
+          show: true
+      }
+    }
+
+    get_message = () => {
+        const inputs = _.get(this.props.question, 'input.inputs', [])
+        const message = _.get(this.props.question, 'message', '')
+        return inputs.reduce((o, n, index) => {
+            return o.replace(`{${n.key}}`, this.state[n.key.toString()])
+        }, message)
     }
 
     render() {
@@ -27,9 +38,9 @@ export default class MultiInputQuestion extends React.Component {
         const button = _.get(this.props.question, 'input.button', {})
 
         return (
-            <Modal isVisible={true}>
+            <Modal isVisible={this.state.show}>
                 <View style={styles.modalContent}>
-                    <View style={{ padding: 15 }}>
+                    <View style={{ padding: 15, paddingBottom: 5, }}>
                         {
                             title && <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, marginTop: 15, }}>
                                 <View style={{ padding: 5 }}>
@@ -49,16 +60,25 @@ export default class MultiInputQuestion extends React.Component {
                                 return (
                                     <View style={{ flexDirection: "row", paddingBottom: 10, width: '100%', }}>
                                         <Item regular style={[styles.textInput, { borderColor: "#DDD", flexDirection: "row" }]}>
-                                            <Input {...input} style={{ fontSize: 14, fontWeight: "bold", }}  placeholderTextColor={'#DDD'} />
+                                            <Input {...input} value={_.get(this.state, input.key.toString(), '')} onChangeText={(text) => this.setState({ [input.key]: text })}  style={{ fontSize: 14, fontWeight: "bold", }}  placeholderTextColor={'#DDD'} />
                                         </Item>
                                     </View>
                                 )
                             })
-                            
                         }
                     </View>
                 </View>
-                <Button {...button} full light style={{ backgroundColor: "#999", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
+                <Button {...button} 
+                    onPress={() => {
+                        this.setState({
+                            show: false
+                        }, () => {
+                            this.props.onSend({ 
+                                text: this.get_message()
+                            }, trigger)
+                        })
+                    }}
+                    full light style={{ backgroundColor: "#999", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
                     <Text style={{ color: "#FFF", fontSize: 14, fontWeight: "bold", }} >{ text }</Text>
                 </Button> 
             </Modal>
