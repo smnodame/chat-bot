@@ -16,7 +16,7 @@ import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Bo
 import Modal from 'react-native-modal'
 import SvgUri from 'react-native-svg-uri'
 
-import TextInput from './component/textinput'
+import TextInputQuestion from './component/TextInputQuestion'
 import ButtonQuestion from './component/ButtonQuestion'
 import CalendarQuestion from './component/CalendarQuestion'
 import CheckboxQuestion from './component/CheckboxQuestion'

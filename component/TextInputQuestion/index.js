@@ -12,7 +12,7 @@ import {
 import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, Item, Input, Card, CardItem, } from 'native-base'
 import styles from '../styles'
 
-export default class TextInput extends React.Component {
+export default class TextInputQuestion extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
