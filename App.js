@@ -254,6 +254,11 @@ export default class Example extends React.Component {
         }
       })
 
+
+      if(question.hasOwnProperty('input') && !question.system) {
+        return
+      }
+
       this.onReceive({
         text: question.message,
         location: question.location || null,
@@ -261,12 +266,8 @@ export default class Example extends React.Component {
         system: question.system || false,
         question
       })
-      
-      if(question.hasOwnProperty('input')) {
-        return
-      }
 
-      if(question.hasOwnProperty('trigger')) {
+      if(question.hasOwnProperty('trigger') && !question.system) {
         this.runMessage(question.trigger)
       }
     }, 1000)
@@ -565,11 +566,11 @@ export default class Example extends React.Component {
       )
     } else if(mode == 'MULTI-INPUT') {
       return (
-        <MultiInputQuestion onSend={this.onSend} question={this.state.current_question}/>
+        <MultiInputQuestion onSend={this.onSend} question={this.state.current_question} />
       )
     } else if(mode == 'PRODUCT-CARD') {
       return (
-        <ProductCardAction />
+        <ProductCardAction onSend={this.onSend} question={this.state.current_question} />
       )
     } else {
       return <View style={{ height: 15 }} />

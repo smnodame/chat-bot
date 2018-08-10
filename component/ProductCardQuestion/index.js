@@ -119,10 +119,16 @@ class ProductCardAction extends React.Component {
     }
 
     render() {
+        const text = _.get(this.props.question, 'input.button.text', 'NEXT')
+        const trigger = _.get(this.props.question, 'trigger', null)
         return (
             <View style={{ flexDirection: 'row' }}>
-                <Button full light onPress={() => { }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
-                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>BUTTON</Text>
+                <Button full light onPress={() => { 
+                    this.props.onSend({ 
+                        text: 'Finish'
+                    }, trigger)
+                }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
+                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ text }</Text>
                 </Button>
             </View>
         )
