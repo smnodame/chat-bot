@@ -21,6 +21,7 @@ import ButtonQuestion from './component/ButtonQuestion'
 import CalendarQuestion from './component/CalendarQuestion'
 import CheckboxQuestion from './component/CheckboxQuestion'
 import MultiInputQuestion from './component/MultiInputQuestion'
+import ProductCardQuestion from './component/ProductCardQuestion'
 
 console.disableYellowBox = true
 
@@ -36,6 +37,23 @@ const config = {
       message: 'What number I am thinking?',
       trigger: '2',
       system: true,
+      input: {
+        mode: 'PRODUCT-CARD',
+        title: 'Coverage amounts',
+        card: {
+          image: require('./images/hamberger.svg'),
+          title: 'Crabstick Cocktail',
+          description: 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available ',
+          min: 1000,
+          max: 10000,
+          unit: '$',
+          default_number: 2000,
+          increase_number: 1000,
+        },
+        button: {
+          text: 'NEXT'
+        }
+      }
     },
     {
       id: '2',
@@ -236,17 +254,18 @@ export default class Example extends React.Component {
         }
       })
 
-      if(question.hasOwnProperty('input')) {
-        return
-      }
-
       this.onReceive({
         text: question.message,
         location: question.location || null,
         image: question.image || null,
         system: question.system || false,
+        question
       })
       
+      if(question.hasOwnProperty('input')) {
+        return
+      }
+
       if(question.hasOwnProperty('trigger')) {
         this.runMessage(question.trigger)
       }
@@ -324,6 +343,7 @@ export default class Example extends React.Component {
   }
 
   renderSystemMessage(props) {
+    const mode = _.get(props, 'currentMessage.question.input.mode', null)
     return (
       <View>
         <SystemMessage
@@ -335,51 +355,9 @@ export default class Example extends React.Component {
             fontSize: 14,
           }}
         />
-        <View style={{ backgroundColor: "#F2F2F2", paddingBottom: 15, marginBottom: 15, }}>
-          <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>Coverage Amounts</Text>
-          <Card style={{ margin: 10 }}>
-              <CardItem style={{ flexDirection: "row" }}>
-              <View style={{ padding: 5 }}>
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, }}>
-                  <SvgUri
-                    width="60"
-                    height="60"
-                    source={require('./images/hamberger.svg')}
-                  />
-                </View>
-                <View>
-                  <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 16, fontWeight: 'bold' }}>
-                  Crabstick Cocktail
-                  </Text>
-                </View> 
-                
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-
-                    <Button transparent>
-                        <Icon name="ios-remove-circle-outline" style={styles.icon}/>
-                    </Button>
-                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#4B4B4B', textAlign: "center", flex: 1, }}>
-                      $ 10000
-                    </Text>
-                    <Button transparent
-                    >
-                        <Icon name="ios-add-circle-outline" style={styles.icon}/>
-                    </Button>
-                </View>
-                <View style={{ marginBottom: 10 }}>
-                  <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 14 }}>
-                  Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available  
-                  </Text>
-                </View> 
-              </View>
-              </CardItem>
-          </Card>
-        </View>
+        {
+          mode == 'PRODUCT-CARD' && <ProductCardQuestion question={props.currentMessage.question} />
+        }
       </View>
     )
   }
