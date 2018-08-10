@@ -32,6 +32,9 @@ export default class ProductCardQuestion extends React.Component {
         const unit = _.get(this.props.question, 'input.card.unit', '฿')
         const description = _.get(this.props.question, 'input.card.description', '')
         const increase_number = _.get(this.props.question, 'input.card.increase_number', 1)
+        const image = _.get(this.props.question, 'input.card.image', '')
+        const min = _.get(this.props.question, 'input.card.min', null)
+        const max = _.get(this.props.question, 'input.card.max', null)
         return (
             <View style={{ backgroundColor: "#F2F2F2", paddingBottom: 15, marginBottom: 15, }}>
                 <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>{ grobal_title }</Text>
@@ -42,7 +45,7 @@ export default class ProductCardQuestion extends React.Component {
                         <SvgUri
                             width="60"
                             height="60"
-                            source={require('../../images/hamberger.svg')}
+                            source={image}
                         />
                         </View>
                         <View>
@@ -60,9 +63,15 @@ export default class ProductCardQuestion extends React.Component {
 
                             <Button transparent
                                 onPress={() => {
+                                    const price = this.state.price - increase_number
+                                    if(min) {
+                                        if(price < min) {
+                                            return
+                                        }
+                                    }
                                     this.setState((previousState) => {
                                         return {
-                                            price: previousState.price - increase_number,
+                                            price: price,
                                         }
                                     })
                                 }}
@@ -74,9 +83,15 @@ export default class ProductCardQuestion extends React.Component {
                             </Text>
                             <Button transparent
                                 onPress={() => {
+                                    const price = this.state.price + increase_number
+                                    if(max) {
+                                        if(price > max) {
+                                            return
+                                        }
+                                    }
                                     this.setState((previousState) => {
                                         return {
-                                            price: previousState.price + increase_number,
+                                            price: price,
                                         }
                                     })
                                 }}
