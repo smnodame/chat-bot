@@ -21,7 +21,7 @@ import ButtonQuestion from './component/ButtonQuestion'
 import CalendarQuestion from './component/CalendarQuestion'
 import CheckboxQuestion from './component/CheckboxQuestion'
 import MultiInputQuestion from './component/MultiInputQuestion'
-import ProductCardQuestion from './component/ProductCardQuestion'
+import { ProductCardQuestion, ProductCardAction } from './component/ProductCardQuestion'
 
 console.disableYellowBox = true
 
@@ -566,6 +566,10 @@ export default class Example extends React.Component {
     } else if(mode == 'MULTI-INPUT') {
       return (
         <MultiInputQuestion onSend={this.onSend} question={this.state.current_question}/>
+      )
+    } else if(mode == 'PRODUCT-CARD') {
+      return (
+        <ProductCardAction />
       )
     } else {
       return <View style={{ height: 15 }} />

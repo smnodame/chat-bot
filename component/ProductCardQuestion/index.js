@@ -15,7 +15,7 @@ import DatePicker from 'react-native-date-picker-x'
 import dateFormat from 'dateformat'
 import SvgUri from 'react-native-svg-uri'
 
-export default class ProductCardQuestion extends React.Component {
+class ProductCardQuestion extends React.Component {
     constructor(props) {
       super(props)
 
@@ -110,4 +110,26 @@ export default class ProductCardQuestion extends React.Component {
             </View>
         )
     }
+}
+
+
+class ProductCardAction extends React.Component {
+    constructor(props) {
+      super(props)
+    }
+
+    render() {
+        return (
+            <View style={{ flexDirection: 'row' }}>
+                <Button full light onPress={() => { }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
+                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>BUTTON</Text>
+                </Button>
+            </View>
+        )
+    }
+}
+
+export { 
+    ProductCardAction,
+    ProductCardQuestion
 }
