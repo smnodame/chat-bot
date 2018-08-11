@@ -20,21 +20,28 @@ export default class TextInputQuestion extends React.Component {
       }
     }
 
+    get_message = () => {
+        const message = _.get(this.props.question, 'message', '{}')
+        const key = _.get(this.props.question, 'input.textinput.key', '')
+        return message.replace(`{${key}}`, this.state.text)
+    }
+
     render() {
         props = this.props
+        const input = _.get(this.props.question, 'input.textinput', {})
         return (
             <View style={styles.footer}>
                 <Item regular style={[styles.textInput]}>
                     <Input style={{ fontSize: 15 }} ref={'chatInputRef'}  returnKeyType={'send'} 
-                    blurOnSubmit={false} value={this.state.text} onChangeText={(text) => this.setState({text})} 
-                    placeholderTextColor={'#999'} placeholder={'ADD A MESSAGE ...'}
-                    {...props.input} />
+                        blurOnSubmit={false} value={this.state.text} onChangeText={(text) => this.setState({text})} 
+                        placeholderTextColor={'#999'} placeholder={'ADD A MESSAGE ...'}
+                    {...input} />
                 </Item>
                 <TouchableOpacity 
                 disabled={!this.state.text}
                 onPress={() => {
-                    props.onFinish({
-                        text: this.state.text,
+                    props.onSend({
+                        text: this.get_message(),
                     }, props.question.trigger)
                     this.setState({
                         text: ''

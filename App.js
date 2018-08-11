@@ -79,6 +79,7 @@ const config = {
     {
       id: '4',
       trigger: '5',
+      message: 'your number is {number}',
       input: {
         mode: 'INPUT',
         textinput: {
@@ -86,7 +87,8 @@ const config = {
           min: 0,
           max: 100,
           placeholder: 'ADD SOME WORD ...',
-          keyboardType: 'number-pad'
+          keyboardType: 'number-pad',
+          key: 'number',
         },
       }
     },
@@ -97,10 +99,12 @@ const config = {
     },
     {
       id: '6',
+      message: 'I am {answer}',
       input: {
         mode: 'INPUT',
         textinput: {
           placeholder: 'เพิ่มคำตอบ',
+          key: 'answer',
         },
       },
       trigger: '7',
@@ -557,7 +561,7 @@ export default class Example extends React.Component {
     const mode = _.get(this.state, 'current_question.input.mode', null)
     if(mode == "INPUT") {
       return (
-        <TextInputQuestion onFinish={this.onSend} input={_.get(input, 'textinput')} question={this.state.current_question}/>
+        <TextInputQuestion onSend={this.onSend} question={this.state.current_question}/>
       )
     } else if(mode == 'BUTTON') {
       return (
