@@ -89,7 +89,7 @@ class ProductCardQuestion extends React.Component {
                                     })
                                 }}
                             >
-                                <Icon name="ios-remove-circle-outline" style={styles.icon}/>
+                                <Icon name="ios-remove-circle-outline" style={[styles.icon, { color: min && this.state.price - increase_number < min ? '#DDD' : '#4B4B4B' }]} />
                             </Button>
                             <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#4B4B4B', textAlign: "center", flex: 1, }}>
                             { unit + ' ' + this.state.price }
@@ -116,7 +116,7 @@ class ProductCardQuestion extends React.Component {
                                     })
                                 }}
                             >
-                                <Icon name="ios-add-circle-outline" style={styles.icon}/>
+                                <Icon name="ios-add-circle-outline" style={[styles.icon, { color: max && this.state.price + increase_number > max ? '#DDD' : '#4B4B4B' }]}/>
                             </Button>
                         </View>
                         <View style={{ marginBottom: 10 }}>
