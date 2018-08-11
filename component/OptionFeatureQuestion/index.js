@@ -27,10 +27,9 @@ class OptionFeaturePopup extends React.Component {
         return (
             <Modal isVisible={this.props.visible} avoidKeyboard={true} >
                 <View style={styles.modalContent}>
-                    <Button transparent style={{ position: 'absolute', right: 0, top: 0, }} onPress={() => {
-                        console.log('========')
-                        console.log(this.props.on_close)
-                        console.log(this.props)
+                    <Button transparent style={{ position: 'absolute', right: 0, top: 0, zIndex: 999, }} onPress={() => {
+                        this.props.on_close()
+                        this.props.on_unchecked()
                     }}>
                         <Icon name='close' style={{ color: "#4B4B4B", fontSize: 35,  }} />
                     </Button>
@@ -48,7 +47,7 @@ class OptionFeaturePopup extends React.Component {
                         {
                             inputs.map((input, index) => {
                                 return (
-                                    <View style={{ flexDirection: "row", paddingBottom: 10, width: '100%', }}>
+                                    <View key={index} style={{ flexDirection: "row", paddingBottom: 10, width: '100%', }}>
                                         <Item regular style={[styles.textInput, { borderColor: "#DDD", flexDirection: "row" }]}>
                                             <Input {...input} value={_.get(this.state, index.toString(), '')} onChangeText={(text) => this.setState({ [index.toString()]: text })}  style={{ fontSize: 14, fontWeight: "bold", }}  placeholderTextColor={'#DDD'} />
                                         </Item>
@@ -60,8 +59,9 @@ class OptionFeaturePopup extends React.Component {
                 </View>
                 <Button {...button} 
                     onPress={() => {
+                        this.props.on_close()
                     }}
-                    full light style={{ backgroundColor: "#999", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, }}>
+                    full light style={{ backgroundColor: "#FF006F", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, }}>
                     <Text style={{ color: "#FFF", fontSize: 14, fontWeight: "bold", }} >{ this.props.button }</Text>
                 </Button> 
             </Modal>
@@ -73,7 +73,8 @@ class OptionFeatureOption extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-        visible: false
+        visible: false,
+        checked: false
       }
     }
 
@@ -81,6 +82,14 @@ class OptionFeatureOption extends React.Component {
         this.setState((previousState) => {
             return {
                 visible: false,
+            }
+        })
+    }
+    
+    on_unchecked = () => {
+        this.setState((previousState) => {
+            return {
+                checked: false,
             }
         })
     }
@@ -101,18 +110,18 @@ class OptionFeatureOption extends React.Component {
                         </Text>
                     </View>
                     <View style={{ height: "100%", alignItems: 'center', }}> +$1.67/MO
-                        <Switch style={{ marginBottom: 15 }} value={ _.get(this.state, index.toString(), false) } 
+                        <Switch style={{ marginBottom: 15 }} value={ this.state.checked } 
                         onValueChange={(checked) => { 
                             const popup = _.get(option, 'popup', null)
                             this.setState({ 
-                                [index.toString()]: checked,
-                                visible: popup? true : false,
+                                checked: checked,
+                                visible: checked && popup? true : false,
                             })
                         }} 
                         />
                         <Text style={{ color: "#999", fontSize: 12, fontWeight: "bold",  }} > { `+${option.currency}${option.price}/${option.per}` } </Text>
                     </View>
-                    <OptionFeaturePopup visible={this.state.visible} on_close={this.on_close} popup={option.popup} button={`+${option.currency}${option.price}/${option.per}`}/>
+                    <OptionFeaturePopup visible={this.state.visible} on_unchecked={this.on_unchecked} on_close={this.on_close} popup={option.popup} button={`+${option.currency}${option.price}/${option.per}`}/>
                 </CardItem>
             </Card>
         )
@@ -136,7 +145,7 @@ class OptionFeatureQuestion extends React.Component {
                 {
                     options.map((option, index) => {
                         return (
-                            <OptionFeatureOption option={option} index={index} />
+                            <OptionFeatureOption key={index} option={option} index={index} />
                         )
                     })
                 }
