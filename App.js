@@ -228,6 +228,20 @@ const config = {
           per: 'MO',
           checked: false,
           currency: '$',
+        }, {
+          title: 'Button Size',
+          description: 'Include the following props with your Button',
+          price: 52,
+          per: 'MI',
+          checked: false,
+          currency: '฿',
+        }, {
+          title: 'Disabled Button',
+          description: 'A disabled button is unusable and un-clickable.',
+          price: 20,
+          per: 'S',
+          checked: true,
+          currency: '$',
         }]
       },
       system: true,
@@ -378,9 +392,6 @@ export default class Example extends React.Component {
     const state_id = _.get(this.state, 'current_question.id', null)
     const props_id = _.get(props, 'currentMessage.question.id', null)
     const mode = _.get(props, 'currentMessage.question.input.mode', null)
-    console.log('==========')
-    console.log(state_id)
-    console.log(props_id)
     return (
       <View>
         <SystemMessage
