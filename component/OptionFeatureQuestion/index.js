@@ -23,9 +23,17 @@ class OptionFeaturePopup extends React.Component {
         const description = _.get(this.props.popup, 'description', null)
         const inputs = _.get(this.props.popup, 'inputs', [])
         const button = _.get(this.props.popup, 'button', {})
+
         return (
             <Modal isVisible={this.props.visible} avoidKeyboard={true} >
                 <View style={styles.modalContent}>
+                    <Button transparent style={{ position: 'absolute', right: 0, top: 0, }} onPress={() => {
+                        console.log('========')
+                        console.log(this.props.on_close)
+                        console.log(this.props)
+                    }}>
+                        <Icon name='close' style={{ color: "#4B4B4B", fontSize: 35,  }} />
+                    </Button>
                     <View style={{ padding: 15, paddingBottom: 5, }}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, marginTop: 15, }}>
                             <View style={{ padding: 5 }}>
@@ -53,10 +61,60 @@ class OptionFeaturePopup extends React.Component {
                 <Button {...button} 
                     onPress={() => {
                     }}
-                    full light style={{ backgroundColor: "#999", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
+                    full light style={{ backgroundColor: "#999", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, }}>
                     <Text style={{ color: "#FFF", fontSize: 14, fontWeight: "bold", }} >{ this.props.button }</Text>
                 </Button> 
             </Modal>
+        )
+    }
+}
+
+class OptionFeatureOption extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        visible: false
+      }
+    }
+
+    on_close = () => {
+        this.setState((previousState) => {
+            return {
+                visible: false,
+            }
+        })
+    }
+
+    render() {
+        const option = _.get(this.props, 'option', {})
+        const index = _.get(this.props, 'index', '')
+
+        return (
+            <Card style={{ margin: 10 }}>
+                <CardItem style={{ flexDirection: "row" }}>
+                    <View style={{ flex: 1, paddingRight: 10, }}>
+                        <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: "500", marginBottom: 10, }}>
+                            { option.title }
+                        </Text>
+                        <Text style={{ color: "#CCC", fontSize: 12, fontWeight: "500", }}>
+                            { option.description }
+                        </Text>
+                    </View>
+                    <View style={{ height: "100%", alignItems: 'center', }}> +$1.67/MO
+                        <Switch style={{ marginBottom: 15 }} value={ _.get(this.state, index.toString(), false) } 
+                        onValueChange={(checked) => { 
+                            const popup = _.get(option, 'popup', null)
+                            this.setState({ 
+                                [index.toString()]: checked,
+                                visible: popup? true : false,
+                            })
+                        }} 
+                        />
+                        <Text style={{ color: "#999", fontSize: 12, fontWeight: "bold",  }} > { `+${option.currency}${option.price}/${option.per}` } </Text>
+                    </View>
+                    <OptionFeaturePopup visible={this.state.visible} on_close={this.on_close} popup={option.popup} button={`+${option.currency}${option.price}/${option.per}`}/>
+                </CardItem>
+            </Card>
         )
     }
 }
@@ -76,33 +134,11 @@ class OptionFeatureQuestion extends React.Component {
             <View style={{ backgroundColor: "#F2F2F2", paddingBottom: 15, }}>
                 <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>{ title }</Text>
                 {
-                    options.map((option, index) => (
-                        <Card style={{ margin: 10 }}>
-                            <CardItem style={{ flexDirection: "row" }}>
-                            <View style={{ flex: 1, paddingRight: 10, }}>
-                                <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: "500", marginBottom: 10, }}>
-                                    { option.title }
-                                </Text>
-                                <Text style={{ color: "#CCC", fontSize: 12, fontWeight: "500", }}>
-                                    { option.description }
-                                </Text>
-                            </View>
-                            <View style={{ height: "100%", alignItems: 'center', }}> +$1.67/MO
-                                <Switch style={{ marginBottom: 15 }} value={ this.state[index.toString()] } 
-                                onValueChange={(checked) => { 
-                                    const popup = _.get(option, 'popup', null)
-                                    this.setState({ 
-                                        [index.toString()]: checked,
-                                        visible: popup? true : false,
-                                    })
-                                }} 
-                                />
-                                <Text style={{ color: "#999", fontSize: 12, fontWeight: "bold",  }} > { `+${option.currency}${option.price}/${option.per}` } </Text>
-                            </View>
-                            <OptionFeaturePopup visible={this.state.visible} popup={option.popup} button={`+${option.currency}${option.price}/${option.per}`}/>
-                            </CardItem>
-                        </Card>
-                    ))
+                    options.map((option, index) => {
+                        return (
+                            <OptionFeatureOption option={option} index={index} />
+                        )
+                    })
                 }
            </View>
         )
