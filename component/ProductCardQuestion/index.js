@@ -80,6 +80,13 @@ class ProductCardQuestion extends React.Component {
                                             price: price,
                                         }
                                     })
+
+                                    const button = _.get(interval_state, `${this.props.question.id.toString()}.button`)
+                                    button.setState((previousState) => {
+                                        return {
+                                            price: previousState.price - _.get(button.props.question, 'input.button.increase_number', 1),
+                                        }
+                                    })
                                 }}
                             >
                                 <Icon name="ios-remove-circle-outline" style={styles.icon}/>
@@ -133,6 +140,17 @@ class ProductCardAction extends React.Component {
             price: _.get(props.question, 'input.button.default_number', 0)
         }
         _.set(interval_state, `${props.question.id.toString()}.button`, this)
+
+        this.card = _.get(interval_state, `${props.question.id.toString()}.card`)
+    }
+
+    get_message = () => {
+        const message = _.get(this.props.question, 'message', '')
+        const key1 = _.get(this.props.question, 'input.card.key', 'null')
+        const key2 = _.get(this.props.question, 'input.button.key', 'null')
+
+        const card = _.get(interval_state, `${this.props.question.id.toString()}.card`)
+        return message.replace(`{${key1}}`, card.state.price).replace(`{${key2}}`, this.state.price)
     }
 
     render() {
@@ -143,7 +161,7 @@ class ProductCardAction extends React.Component {
             <View style={{ flexDirection: 'row' }}>
                 <Button full light onPress={() => { 
                     this.props.onSend({ 
-                        text: 'Finish'
+                        text: this.get_message()
                     }, trigger)
                 }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
                     <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${operation} (+${this.state.price}/${unit})` }</Text>

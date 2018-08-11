@@ -34,9 +34,10 @@ const config = {
   steps: [
     {
       id: '1',
-      message: 'What number I am thinking?',
+      question: 'What number I am thinking?',
       trigger: '2',
       system: true,
+      message: `It's around {amount}, so you have to pay {price} bath per month.1`,
       input: {
         mode: 'PRODUCT-CARD',
         title: 'Coverage amounts',
@@ -49,12 +50,14 @@ const config = {
           unit: '$',
           default_number: 2000,
           increase_number: 1000,
+          key: 'amount',
         },
         button: {
           operation: 'ADD',
           default_number: 0.75,
           increase_number: 0.75,
-          unit: 'MO'
+          unit: 'MO',
+          key: 'price',
         }
       }
     },
@@ -264,7 +267,7 @@ export default class Example extends React.Component {
       }
 
       this.onReceive({
-        text: question.message,
+        text: question.system? question.question : question.message,
         location: question.location || null,
         image: question.image || null,
         system: question.system || false,
