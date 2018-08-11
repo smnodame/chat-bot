@@ -228,6 +228,21 @@ const config = {
           per: 'MO',
           checked: false,
           currency: '$',
+          popup: {
+            title: 'Taylor Swift',
+            description: 'Taylor Alison Swift is an American singer-songwriter.',
+            inputs: [{
+              placeholder: 'THIS IS TEXT',
+              key: 'TEXT',
+            }, {
+              placeholder: 'THIS IS NUMBER PAD',
+              keyboardType: 'number-pad',
+              key: 'NUMBER',
+            }],
+            button: {
+              text: 'TAKE IT'
+            },
+          },
         }, {
           title: 'Button Size',
           description: 'Include the following props with your Button',
