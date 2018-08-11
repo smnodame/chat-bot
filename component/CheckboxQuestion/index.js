@@ -34,23 +34,19 @@ export default class CheckboxQuestion extends React.Component {
         const message_func = _.get(this.props.question, 'input.message_func', this.get_message)
         return (
             <View>
-                <List style={{ backgroundColor: "#F8F8F8", marginBottom: 60 }}>
+                <View style={{ backgroundColor: "#F8F8F8", marginBottom: 60 }}>
                     <ScrollView>
                         {
                             options.map((option, index) => (
-                                <ListItem onPress={() => this.setState({ [index.toString()]: !this.state[index.toString()] })}>
-                                    <CheckBox checked={this.state[index.toString()]} color="green" onPress={() => this.setState({ [index.toString()]: !this.state[index.toString()] })}/>
-                                    <Body>
-                                        <Text>{ option.label }</Text>
-                                    </Body>
-                                    <Right>
-                                    </Right>
-                                </ListItem>
+                                <Button full light onPress={() => this.setState({ [index.toString()]: !this.state[index.toString()] })} style={{ backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, flexDirection: 'row', justifyContent: "flex-start", }}>
+                                    <CheckBox checked={this.state[index.toString()]} style={{ marginLeft: 10, marginRight: 10, }} color="green" onPress={() => this.setState({ [index.toString()]: !this.state[index.toString()] })}/>
+                                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ option.label.toUpperCase() }</Text>
+                                </Button>
                             ))
                         }
                         
                     </ScrollView>
-                </List>
+                </View>
                 <Button full onPress={() => {
                         const chosen = options.filter((option, index) => {
                             return this.state[index.toString()]

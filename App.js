@@ -36,7 +36,7 @@ const config = {
     {
       id: '1',
       question: 'What number I am thinking?',
-      trigger: '2',
+      trigger: '13',
       system: true,
       message: `It's around {amount}, so you have to pay {price} bath per month.1`,
       input: {
