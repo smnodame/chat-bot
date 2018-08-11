@@ -410,7 +410,7 @@ export default class Example extends React.Component {
           mode == 'OPTION-FEATURE' && <OptionFeatureQuestion question={props.currentMessage.question} />
         }
         {
-          <View style={{ height: 15, }}/>
+          state_id.toString() != props_id.toString() && <View style={{ height: 15, }} />
         }
       </View>
     )
