@@ -374,8 +374,13 @@ export default class Example extends React.Component {
     )
   }
 
-  renderSystemMessage(props) {
+  renderSystemMessage = (props) => {
+    const state_id = _.get(this.state, 'current_question.id', null)
+    const props_id = _.get(props, 'currentMessage.question.id', null)
     const mode = _.get(props, 'currentMessage.question.input.mode', null)
+    console.log('==========')
+    console.log(state_id)
+    console.log(props_id)
     return (
       <View>
         <SystemMessage
@@ -392,6 +397,9 @@ export default class Example extends React.Component {
         }
         {
           mode == 'OPTION-FEATURE' && <OptionFeatureQuestion question={props.currentMessage.question} />
+        }
+        {
+          <View style={{ height: 15, }}/>
         }
       </View>
     )

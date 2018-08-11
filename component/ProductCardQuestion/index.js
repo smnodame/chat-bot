@@ -42,7 +42,7 @@ class ProductCardQuestion extends React.Component {
         const min = _.get(this.props.question, 'input.card.min', null)
         const max = _.get(this.props.question, 'input.card.max', null)
         return (
-            <View style={{ backgroundColor: "#F2F2F2", paddingBottom: 15, marginBottom: 15, }}>
+            <View style={{ backgroundColor: "#F2F2F2", paddingBottom: 15, }}>
                 <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>{ grobal_title }</Text>
                 <Card style={{ margin: 10 }}>
                     <CardItem style={{ flexDirection: "row" }}>

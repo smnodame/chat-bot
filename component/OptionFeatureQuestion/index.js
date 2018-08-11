@@ -23,7 +23,7 @@ export default class OptionFeatureQuestion extends React.Component {
         const options = _.get(this.props.question, 'input.options', [])
         const title = _.get(this.props.question, 'input.title', '')
         return (
-            <View style={{ backgroundColor: "#F2F2F2", paddingBottom: 15, marginBottom: 15, }}>
+            <View style={{ backgroundColor: "#F2F2F2", paddingBottom: 15, }}>
                 <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>{ title }</Text>
                 {
                     options.map((option) => (
