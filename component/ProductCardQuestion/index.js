@@ -35,7 +35,7 @@ class ProductCardQuestion extends React.Component {
         const grobal_title = _.get(this.props.question, 'input.title', '')
 
         const card_title = _.get(this.props.question, 'input.card.title', '')
-        const unit = _.get(this.props.question, 'input.card.unit', '฿')
+        const currency = _.get(this.props.question, 'input.card.currency', '฿')
         const description = _.get(this.props.question, 'input.card.description', '')
         const increase_number = _.get(this.props.question, 'input.card.increase_number', 1)
         const image = _.get(this.props.question, 'input.card.image', '')
@@ -92,7 +92,7 @@ class ProductCardQuestion extends React.Component {
                                 <Icon name="ios-remove-circle-outline" style={[styles.icon, { color: min && this.state.price - increase_number < min ? '#DDD' : '#4B4B4B' }]} />
                             </Button>
                             <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#4B4B4B', textAlign: "center", flex: 1, }}>
-                            { unit + ' ' + this.state.price }
+                            { currency + ' ' + this.state.price }
                             </Text>
                             <Button transparent
                                 onPress={() => {
@@ -155,7 +155,7 @@ class ProductCardAction extends React.Component {
 
     render() {
         const operation = _.get(this.props.question, 'input.button.operation', 'ADD')
-        const unit = _.get(this.props.question, 'input.button.unit', 'MO')
+        const per = _.get(this.props.question, 'input.button.per', 'MO')
         const trigger = _.get(this.props.question, 'trigger', null)
         return (
             <View style={{ flexDirection: 'row' }}>
@@ -164,7 +164,7 @@ class ProductCardAction extends React.Component {
                         text: this.get_message()
                     }, trigger)
                 }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
-                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${operation} (+${this.state.price}/${unit})` }</Text>
+                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${operation} (+${this.state.price}/${per})` }</Text>
                 </Button>
             </View>
         )

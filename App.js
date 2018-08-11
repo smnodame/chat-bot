@@ -36,7 +36,7 @@ const config = {
     {
       id: '1',
       question: 'What number I am thinking?',
-      trigger: '13',
+      trigger: '15',
       system: true,
       message: `It's around {amount}, so you have to pay {price} bath per month.1`,
       input: {
@@ -48,7 +48,7 @@ const config = {
           description: 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available ',
           min: 1000,
           max: 10000,
-          unit: '$',
+          currency: '$',
           default_number: 2000,
           increase_number: 1000,
           key: 'amount',
@@ -57,7 +57,7 @@ const config = {
           operation: 'ADD',
           default_number: 0.75,
           increase_number: 0.75,
-          unit: 'MO',
+          per: 'MO',
           key: 'price',
         }
       }
@@ -214,7 +214,24 @@ const config = {
         }
       },
       trigger: '12',
-    }
+    },
+    {
+      id: '15',
+      question: 'choose you option!',
+      input: {
+        mode: 'OPTION-FEATURE',
+        title: 'Add Others To Your Policy',
+        options: [{
+          title: 'Icon Button',
+          description: 'The Icon Buttons, can take text and/or icon as child elements inside the Button.',
+          price: 0,
+          per: 'MO',
+          checked: false,
+          currency: '$',
+        }]
+      },
+      system: true,
+    },
   ]
 }
 
