@@ -19,6 +19,15 @@ export default class CalendarQuestion extends React.Component {
       super(props)
     }
 
+    get_message = () => {
+        const mode = _.get(this.props.question, 'input.calendar.mode', 'date')
+        const date = mode == 'date'? dateFormat(this.date, "dddd, mmmm dS, yyyy") : dateFormat(this.date, "dddd, mmmm dS, yyyy, h:MM:ss TT")
+        
+        const message = _.get(this.props.question, 'message', '{}')
+        const key = _.get(this.props.question, 'input.calendar.key', '')
+        return message? message.replace(`{${key}}`, date) : date
+    }
+
     render = () => {
         const trigger = _.get(this.props.question, 'trigger', null)
         const mode = _.get(this.props.question, 'input.calendar.mode', 'date')
@@ -36,7 +45,7 @@ export default class CalendarQuestion extends React.Component {
                 />
                 <Button full onPress={() => {
                         this.props.onSend({ 
-                            text: mode == 'date'? dateFormat(this.date, "dddd, mmmm dS, yyyy") : dateFormat(this.date, "dddd, mmmm dS, yyyy, h:MM:ss TT")
+                            text: this.get_message()
                         }, trigger)} 
                     } 
                     style={{ backgroundColor: "#F8F8F8", borderColor: "#EEE", height: 60, borderWidth: 0.5, borderTopWidth: 1, }}>

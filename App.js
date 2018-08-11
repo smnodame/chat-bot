@@ -136,10 +136,12 @@ const config = {
     },
     {
       id: '9',
+      message: 'the date is {date}',
       input: {
         mode: 'CALENDAR',
         calendar: {
-          mode: 'datetime'
+          mode: 'datetime',
+          key: 'date',
         },
         button: {
           text: 'CHOOSE'

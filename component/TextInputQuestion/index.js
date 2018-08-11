@@ -23,7 +23,7 @@ export default class TextInputQuestion extends React.Component {
     get_message = () => {
         const message = _.get(this.props.question, 'message', '{}')
         const key = _.get(this.props.question, 'input.textinput.key', '')
-        return message.replace(`{${key}}`, this.state.text)
+        return message? message.replace(`{${key}}`, this.state.text) : this.state.text
     }
 
     render() {
