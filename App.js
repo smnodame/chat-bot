@@ -22,7 +22,7 @@ import CalendarQuestion from './component/CalendarQuestion'
 import CheckboxQuestion from './component/CheckboxQuestion'
 import MultiInputQuestion from './component/MultiInputQuestion'
 import { ProductCardQuestion, ProductCardAction } from './component/ProductCardQuestion'
-import OptionFeatureQuestion from './component/OptionFeatureQuestion'
+import { OptionFeatureQuestion, OptionFeatureAction }  from './component/OptionFeatureQuestion'
 
 console.disableYellowBox = true
 
@@ -624,6 +624,10 @@ export default class Example extends React.Component {
     } else if(mode == 'PRODUCT-CARD') {
       return (
         <ProductCardAction onSend={this.onSend} question={this.state.current_question} />
+      )
+    } else if(mode == 'OPTION-FEATURE') {
+      return (
+        <OptionFeatureAction onSend={this.onSend} question={this.state.current_question} />
       )
     } else {
       return <View style={{ height: 15 }} />
