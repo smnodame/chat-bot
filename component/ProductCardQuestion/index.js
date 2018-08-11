@@ -15,6 +15,10 @@ import DatePicker from 'react-native-date-picker-x'
 import dateFormat from 'dateformat'
 import SvgUri from 'react-native-svg-uri'
 
+const interval_state = {
+
+}
+
 class ProductCardQuestion extends React.Component {
     constructor(props) {
       super(props)
@@ -22,6 +26,8 @@ class ProductCardQuestion extends React.Component {
       this.state = {
           price: _.get(props.question, 'input.card.default_number', 0)
       }
+
+      _.set(interval_state, `${props.question.id.toString()}.card`, this)
     }
 
     render = () => {
@@ -94,6 +100,13 @@ class ProductCardQuestion extends React.Component {
                                             price: price,
                                         }
                                     })
+
+                                    const button = _.get(interval_state, `${this.props.question.id.toString()}.button`)
+                                    button.setState((previousState) => {
+                                        return {
+                                            price: previousState.price + _.get(button.props.question, 'input.button.increase_number', 1),
+                                        }
+                                    })
                                 }}
                             >
                                 <Icon name="ios-add-circle-outline" style={styles.icon}/>
@@ -115,11 +128,16 @@ class ProductCardQuestion extends React.Component {
 
 class ProductCardAction extends React.Component {
     constructor(props) {
-      super(props)
+        super(props)
+        this.state = {
+            price: _.get(props.question, 'input.button.default_number', 0)
+        }
+        _.set(interval_state, `${props.question.id.toString()}.button`, this)
     }
 
     render() {
-        const text = _.get(this.props.question, 'input.button.text', 'NEXT')
+        const operation = _.get(this.props.question, 'input.button.operation', 'ADD')
+        const unit = _.get(this.props.question, 'input.button.unit', 'MO')
         const trigger = _.get(this.props.question, 'trigger', null)
         return (
             <View style={{ flexDirection: 'row' }}>
@@ -128,7 +146,7 @@ class ProductCardAction extends React.Component {
                         text: 'Finish'
                     }, trigger)
                 }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
-                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ text }</Text>
+                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${operation} (+${this.state.price}/${unit})` }</Text>
                 </Button>
             </View>
         )

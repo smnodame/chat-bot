@@ -51,7 +51,10 @@ const config = {
           increase_number: 1000,
         },
         button: {
-          text: 'NEXT'
+          operation: 'ADD',
+          default_number: 0.75,
+          increase_number: 0.75,
+          unit: 'MO'
         }
       }
     },
@@ -145,6 +148,7 @@ const config = {
     {
       id: '11',
       message: 'you choose Korat',
+      trigger: '14'
     },
     {
       id: '12',
