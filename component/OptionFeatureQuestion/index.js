@@ -135,8 +135,10 @@ class OptionFeatureOption extends React.Component {
                                 const on_update_total = _.get(interval_state, `${id}.on_update_total`, () => {})
                                 if(checked) {
                                     _.set(interval_state, `${id}.total`, total + option.price) 
+                                    _.set(interval_state, `${id}.chosen.${index}`, true) 
                                 } else {
                                     _.set(interval_state, `${id}.total`, total - option.price)
+                                    _.set(interval_state, `${id}.chosen.${index}`, false) 
                                 }
                                 on_update_total(_.get(interval_state, `${id}.total`, 0))
                             }} 
@@ -193,19 +195,32 @@ class OptionFeatureAction extends React.Component {
             total
         })
     }
+    
+    get_message = () => {
+        const key = _.get(this.props.question, 'input.button.key', '')
+        const message = _.get(this.props.question, 'message', '')
+
+        return message.replace(`{${key}}`, this.state.total)
+    }
 
     render() {
         const operation = _.get(this.props.question, 'input.button.operation', 'ADD')
         const per = _.get(this.props.question, 'input.button.per', 'MO')
-        const key = _.get(this.props.question, 'input.button.key', '')
         const trigger = _.get(this.props.question, 'trigger', null)
-        const message = _.get(this.props.question, 'message', '')
+        const message_func = _.get(this.props.question, 'input.message_func', this.get_message)
+        const id = _.get(this.props.question, 'id', '')
 
         return (
             <View style={{ flexDirection: 'row' }}>
                 <Button full light onPress={() => {
+                    const chosen = _.get(interval_state, `${id}.chosen`, {})
+                    const args = Object.keys(chosen).filter((key) => {
+                        return chosen[key]
+                    }).map((key) => {
+                        return this.props.question.input.options[parseInt(key)]
+                    })
                     this.props.onSend({ 
-                        text: message.replace(`{${key}}`, this.state.total)
+                        text: message_func(args)
                     }, trigger)
                 }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
                     <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${operation} (+${this.state.total}/${per})` }</Text>

@@ -222,6 +222,9 @@ const config = {
       input: {
         mode: 'OPTION-FEATURE',
         title: 'Add Others To Your Policy',
+        message_func: (chosen) => {
+          return `We enabled ${chosen.length} items.`
+        },
         options: [{
           title: 'Icon Button',
           description: 'The Icon Buttons, can take text and/or icon as child elements inside the Button.',
