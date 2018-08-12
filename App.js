@@ -38,7 +38,7 @@ const config = {
       question: 'What number I am thinking?',
       trigger: '15',
       system: true,
-      message: `It's around {amount}, so you have to pay {price} bath per month.1`,
+      message: `It's around {amount}, so you have to pay {price} bath per month.`,
       input: {
         mode: 'PRODUCT-CARD',
         title: 'Coverage amounts',
@@ -257,7 +257,12 @@ const config = {
           per: 'S',
           checked: true,
           currency: '$',
-        }]
+        }],
+        button: {
+          operation: 'ADD',
+          default_number: 0,
+          per: 'MO',
+        }
       },
       system: true,
     },

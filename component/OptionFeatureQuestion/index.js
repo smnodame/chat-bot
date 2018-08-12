@@ -162,11 +162,14 @@ class OptionFeatureAction extends React.Component {
     }
 
     render() {
+        const operation = _.get(this.props.question, 'input.button.operation', 'ADD')
+        const per = _.get(this.props.question, 'input.button.per', 'MO')
+        const default_number = _.get(this.props.question, 'input.button.default_number', 0)
         return (
             <View style={{ flexDirection: 'row' }}>
                 <Button full light onPress={() => {
                 }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
-                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `ADD (+35/MO)` }</Text>
+                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${operation} (+${default_number}/${per})` }</Text>
                 </Button>
             </View>
         )
