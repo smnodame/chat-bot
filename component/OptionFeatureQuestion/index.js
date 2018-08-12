@@ -63,7 +63,7 @@ class OptionFeaturePopup extends React.Component {
                     onPress={() => {
                         let valid = true
                         inputs.forEach((input, index) => {
-                            if(!_.get(this.state, index.toString(), '') && input.require) {
+                            if(!_.get(this.state, index.toString(), '') && _.get(input, 'require', true)) {
                                 valid = false
                             }
                         })

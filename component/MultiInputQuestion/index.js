@@ -73,9 +73,18 @@ export default class MultiInputQuestion extends React.Component {
                         this.setState({
                             show: false
                         }, () => {
-                            this.props.onSend({ 
-                                text: this.get_message()
-                            }, trigger)
+
+                            let valid = true
+                            inputs.forEach((input, index) => {
+                                if(!_.get(this.state, input.key.toString(), '') && _.get(input, 'require', true)) {
+                                    valid = false
+                                }
+                            })
+                            if(valid) {
+                                this.props.onSend({ 
+                                    text: this.get_message()
+                                }, trigger)
+                            }
                         })
                     }}
                     full light style={{ backgroundColor: "#999", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
