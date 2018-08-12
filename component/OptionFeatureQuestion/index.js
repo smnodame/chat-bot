@@ -61,7 +61,15 @@ class OptionFeaturePopup extends React.Component {
                 </View>
                 <Button {...button} 
                     onPress={() => {
-                        this.props.on_close()
+                        let valid = true
+                        inputs.forEach((input, index) => {
+                            if(!_.get(this.state, index.toString(), '') && input.require) {
+                                valid = false
+                            }
+                        })
+                        if(valid) {
+                            this.props.on_close()
+                        }
                     }}
                     full light style={{ backgroundColor: "#FF006F", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, }}>
                     <Text style={{ color: "#FFF", fontSize: 14, fontWeight: "bold", }} >{ this.props.button }</Text>

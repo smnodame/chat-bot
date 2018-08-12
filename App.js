@@ -228,16 +228,19 @@ const config = {
           per: 'MO',
           checked: false,
           currency: '$',
+          key: 'icon_button',
           popup: {
             title: 'Taylor Swift',
             description: 'Taylor Alison Swift is an American singer-songwriter.',
             inputs: [{
               placeholder: 'THIS IS TEXT',
               key: 'TEXT',
+              require: true,
             }, {
               placeholder: 'THIS IS NUMBER PAD',
               keyboardType: 'number-pad',
               key: 'NUMBER',
+              require: false,
             }],
             button: {
               text: 'TAKE IT'
@@ -250,6 +253,7 @@ const config = {
           per: 'MI',
           checked: false,
           currency: '฿',
+          key: 'button_size',
         }, {
           title: 'Disabled Button',
           description: 'A disabled button is unusable and un-clickable.',
@@ -257,6 +261,7 @@ const config = {
           per: 'S',
           checked: true,
           currency: '$',
+          key: 'disabled_button',
         }],
         button: {
           operation: 'ADD',
