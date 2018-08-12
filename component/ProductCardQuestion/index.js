@@ -15,9 +15,7 @@ import DatePicker from 'react-native-date-picker-x'
 import dateFormat from 'dateformat'
 import SvgUri from 'react-native-svg-uri'
 
-const interval_state = {
-
-}
+const interval_state = {}
 
 class ProductCardQuestion extends React.Component {
     constructor(props) {

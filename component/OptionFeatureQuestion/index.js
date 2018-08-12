@@ -13,6 +13,8 @@ import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Bo
 import styles from '../styles'
 import Modal from 'react-native-modal'
 
+const interval_state = {}
+
 class OptionFeaturePopup extends React.Component {
     constructor(props) {
       super(props)
@@ -97,6 +99,7 @@ class OptionFeatureOption extends React.Component {
     render() {
         const option = _.get(this.props, 'option', {})
         const index = _.get(this.props, 'index', '')
+        const id = _.get(this.props, 'id', '')
 
         return (
             <Card style={{ margin: 10 }}>
@@ -110,14 +113,25 @@ class OptionFeatureOption extends React.Component {
                         </Text>
                     </View>
                     <View style={{ height: "100%", alignItems: 'center', }}> +$1.67/MO
-                        <Switch style={{ marginBottom: 15 }} value={ this.state.checked } 
-                        onValueChange={(checked) => { 
-                            const popup = _.get(option, 'popup', null)
-                            this.setState({ 
-                                checked: checked,
-                                visible: checked && popup? true : false,
-                            })
-                        }} 
+                        <Switch 
+                            style={{ marginBottom: 15 }} 
+                            value={ this.state.checked } 
+                            onValueChange={(checked) => { 
+                                const popup = _.get(option, 'popup', null)
+                                this.setState({ 
+                                    checked: checked,
+                                    visible: checked && popup? true : false,
+                                })
+
+                                const total = _.get(interval_state, `${id}.total`, 0)
+                                const on_update_total = _.get(interval_state, `${id}.on_update_total`, () => {})
+                                if(checked) {
+                                    _.set(interval_state, `${id}.total`, total + option.price) 
+                                } else {
+                                    _.set(interval_state, `${id}.total`, total - option.price)
+                                }
+                                on_update_total(_.get(interval_state, `${id}.total`, 0))
+                            }} 
                         />
                         <Text style={{ color: "#999", fontSize: 12, fontWeight: "bold",  }} > { `+${option.currency}${option.price}/${option.per}` } </Text>
                     </View>
@@ -138,6 +152,7 @@ class OptionFeatureQuestion extends React.Component {
     render() {
         const options = _.get(this.props.question, 'input.options', [])
         const title = _.get(this.props.question, 'input.title', '')
+        const id = _.get(this.props.question, 'id', '')
 
         return (
             <View style={{ backgroundColor: "#F2F2F2", paddingBottom: 15, }}>
@@ -145,7 +160,7 @@ class OptionFeatureQuestion extends React.Component {
                 {
                     options.map((option, index) => {
                         return (
-                            <OptionFeatureOption key={index} option={option} index={index} />
+                            <OptionFeatureOption id={id} key={index} option={option} index={index} />
                         )
                     })
                 }
@@ -158,18 +173,27 @@ class OptionFeatureAction extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            total: _.get(props.question, 'input.button.default_number', 0),
         }
+
+        const id = _.get(props.question, 'id', '')
+        _.set(interval_state, `${id}.on_update_total`, this.on_update_total) 
+    }
+
+    on_update_total = (total) => {
+        this.setState({
+            total
+        })
     }
 
     render() {
         const operation = _.get(this.props.question, 'input.button.operation', 'ADD')
         const per = _.get(this.props.question, 'input.button.per', 'MO')
-        const default_number = _.get(this.props.question, 'input.button.default_number', 0)
         return (
             <View style={{ flexDirection: 'row' }}>
                 <Button full light onPress={() => {
                 }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
-                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${operation} (+${default_number}/${per})` }</Text>
+                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${operation} (+${this.state.total}/${per})` }</Text>
                 </Button>
             </View>
         )
