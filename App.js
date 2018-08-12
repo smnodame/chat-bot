@@ -218,6 +218,7 @@ const config = {
     {
       id: '15',
       question: 'choose you option!',
+      message: 'You have to pay more {total}',
       input: {
         mode: 'OPTION-FEATURE',
         title: 'Add Others To Your Policy',
@@ -267,9 +268,11 @@ const config = {
           operation: 'ADD',
           default_number: 0,
           per: 'MO',
+          key: 'total',
         }
       },
       system: true,
+      trigger: '2',
     },
   ]
 }

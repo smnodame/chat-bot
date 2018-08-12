@@ -197,9 +197,16 @@ class OptionFeatureAction extends React.Component {
     render() {
         const operation = _.get(this.props.question, 'input.button.operation', 'ADD')
         const per = _.get(this.props.question, 'input.button.per', 'MO')
+        const key = _.get(this.props.question, 'input.button.key', '')
+        const trigger = _.get(this.props.question, 'trigger', null)
+        const message = _.get(this.props.question, 'message', '')
+
         return (
             <View style={{ flexDirection: 'row' }}>
                 <Button full light onPress={() => {
+                    this.props.onSend({ 
+                        text: message.replace(`{${key}}`, this.state.total)
+                    }, trigger)
                 }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
                     <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${operation} (+${this.state.total}/${per})` }</Text>
                 </Button>
