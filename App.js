@@ -282,7 +282,52 @@ const config = {
       id: '16',
       question: 'choose you option!',
       input: {
-        mode: 'CIRCLE-CARD'
+        mode: 'CIRCLE-CARD',
+        title: 'Add Extra Coverage',
+        description: 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available.',
+        options: [
+            {
+                key: 1,
+                image: require('./images/gallery.svg'),
+                name: 'GALLERY',
+                price: 1000,
+                currency: '$',
+                selected: true,
+                card: {
+                  image: require('./images/hamberger.svg'),
+                  title: 'Crabstick Cocktail',
+                  description: 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available.',
+                  min: 1000,
+                  max: 10000,
+                  currency: '$',
+                  default_number: 2000,
+                  increase_number: 1000
+                },
+                button: {
+                  operation: 'ADD',
+                  default_number: 0.75,
+                  increase_number: 0.75,
+                  per: 'MO',
+                  key: 'price',
+                }
+            },
+            {
+                key: 2,
+                image: require('./images/calendar.svg'),
+                name: 'CALENDAR',
+                price: 200,
+                currency: '$',
+                selected: false,
+            },
+            {
+                key: 2,
+                image: require('./images/video.svg'),
+                name: 'VIDEO',
+                price: 500,
+                currency: '฿',
+                selected: false,
+            }
+        ]
       },
       system: true,
     },

@@ -22,47 +22,51 @@ export default class CircleCardQuestion extends React.Component {
     }
 
     render = () => {
+        const title = 'Add Extra Coverage'
+        const description = 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available.'
+        const options = [
+            {
+                key: 1,
+                image: require('../../images/gallery.svg'),
+                name: 'GALLERY',
+                price: 1000,
+                currency: '$',
+                selected: true,
+            },
+            {
+                key: 2,
+                image: require('../../images/calendar.svg'),
+                name: 'CALENDAR',
+                price: 200,
+                currency: '$',
+                selected: false,
+            },
+            {
+                key: 2,
+                image: require('../../images/video.svg'),
+                name: 'VIDEO',
+                price: 500,
+                currency: '฿',
+                selected: false,
+            }
+        ]
         return (
             <View style={{ backgroundColor: "#F8F8F8", paddingBottom: 20, }}>
-                <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>Add Extra Coverage</Text>
+                <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>{ title }</Text>
                 <View style={{ flexDirection: "row", paddingBottom: 20, width: '100%', paddingLeft: 10, paddingRight: 10, }}>
                     <View style={{ flex: 1 }}>
-                        <Text style={{ color: "#4B4B4B", fontSize: 12, fontWeight: '400', textAlign: 'center', }}>Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available.</Text>
+                        <Text style={{ color: "#4B4B4B", fontSize: 12, fontWeight: '400', textAlign: 'center', }}>{ description }</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', flex: 1 }}>
                     <FlatList
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
-                        data={[
-                            {
-                                key: 1,
-                                image: require('../../images/gallery.svg'),
-                                name: 'GALLERY',
-                                price: 1000,
-                                currency: '$',
-                                selected: true,
-                            },
-                            {
-                                key: 2,
-                                image: require('../../images/calendar.svg'),
-                                name: 'CALENDAR',
-                                price: 200,
-                                currency: '$',
-                                selected: false,
-                            },
-                            {
-                                key: 2,
-                                image: require('../../images/video.svg'),
-                                name: 'VIDEO',
-                                price: 500,
-                                currency: '฿',
-                                selected: false,
-                            }
-                        ]}
+                        data={options}
                         renderItem={({item}) => (
                             <View style={{ width: 165, paddingLeft: 10, }} key={item.key}>
-                                <View>
+                                <TouchableOpacity onPress={() => {
+                                }}>
                                     {
                                         item.selected && <SvgUri
                                             width="160"
@@ -97,7 +101,7 @@ export default class CircleCardQuestion extends React.Component {
                                         </Text>
                                     }
                                     
-                                </View>
+                                </TouchableOpacity>
                                 <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', textAlign: 'center', }}>{ item.name }</Text>
                             </View>
                         )}
