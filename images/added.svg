@@ -13,14 +13,6 @@
 
     <line fill="none" stroke="#EFEFEF" stroke-width="3" stroke-linecap="round" stroke-miterlimit="10" x1="84.374" y1="90.479" x2="59.866" y2="116.53"/>
   </g>
-  <g id="icon" >
-    <svg width=250 height=250 
-         x=125 y=125
-         xmlns="http://www.w3.org/2000/svg"
-         xmlns:xlink="http://www.w3.org/1999/xlink">
-	{icon}
-    </svg>
-  </g>
   <g id="Layer_2">
     <polyline fill="#28AF7E" stroke="#38AC7F" stroke-width="2" stroke-miterlimit="10" points="41.539,310.452 10,304.181
                                                                                               37.079,351.139 13.504,395.523 80.87,397.116 74.83,382.092 	"/>

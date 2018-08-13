@@ -57,7 +57,7 @@ export default class CircleCardQuestion extends React.Component {
                                     <SvgUri
                                         width="160"
                                         height="160"
-                                        source={require('../../images/blank.svg')}
+                                        source={require('../../images/added.svg')}
                                     />
                                     <SvgUri
                                         style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}

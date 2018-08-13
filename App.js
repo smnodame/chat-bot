@@ -28,7 +28,7 @@ import { OptionFeatureQuestion, OptionFeatureAction }  from './component/OptionF
 console.disableYellowBox = true
 
 const config = {
-  start_id: '16',
+  start_id: '1',
   bot: {
     name: 'Clave Host',
     _id: 2
@@ -37,7 +37,7 @@ const config = {
     {
       id: '1',
       question: 'What number I am thinking?',
-      trigger: '15',
+      trigger: '2',
       system: true,
       message: `It's around {amount}, so you have to pay {price} bath per month.`,
       input: {
@@ -76,7 +76,7 @@ const config = {
         latitude: 48.864601,
         longitude: 2.398704
       },
-      trigger: '4'
+      trigger: '16'
     },
     {
       id: '4',
