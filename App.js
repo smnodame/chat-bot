@@ -21,13 +21,14 @@ import ButtonQuestion from './component/ButtonQuestion'
 import CalendarQuestion from './component/CalendarQuestion'
 import CheckboxQuestion from './component/CheckboxQuestion'
 import MultiInputQuestion from './component/MultiInputQuestion'
+import CircleCardQuestion from './component/CircleCardQuestion'
 import { ProductCardQuestion, ProductCardAction } from './component/ProductCardQuestion'
 import { OptionFeatureQuestion, OptionFeatureAction }  from './component/OptionFeatureQuestion'
 
 console.disableYellowBox = true
 
 const config = {
-  start_id: '1',
+  start_id: '16',
   bot: {
     name: 'Clave Host',
     _id: 2
@@ -45,7 +46,7 @@ const config = {
         card: {
           image: require('./images/hamberger.svg'),
           title: 'Crabstick Cocktail',
-          description: 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available ',
+          description: 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available.',
           min: 1000,
           max: 10000,
           currency: '$',
@@ -277,6 +278,14 @@ const config = {
       system: true,
       trigger: '2',
     },
+    {
+      id: '16',
+      question: 'choose you option!',
+      input: {
+        mode: 'CIRCLE-CARD'
+      },
+      system: true,
+    },
   ]
 }
 
@@ -439,6 +448,9 @@ export default class Example extends React.Component {
         }
         {
           mode == 'OPTION-FEATURE' && <OptionFeatureQuestion question={props.currentMessage.question} />
+        }
+        {
+          mode == 'CIRCLE-CARD' && <CircleCardQuestion question={this.state.current_question} />
         }
         {
           state_id.toString() != props_id.toString() && <View style={{ height: 15, }} />
