@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500px"
+     height="500px" viewBox="0 0 500 500" enable-background="new 0 0 500 500" xml:space="preserve">
+  <g id="Layer_1">
+    <path fill="#FFFFFF" stroke="#EFEFEF" stroke-width="3" stroke-miterlimit="10" d="M471.038,250c0,124.265-98.55,225-220.116,225
+                                                                                     S30.806,374.265,30.806,250c0-124.26,98.55-225,220.116-225S471.038,125.74,471.038,250z"/>
+
+    <ellipse fill="#FFFFFF" stroke="#EFEFEF" stroke-width="3" stroke-miterlimit="10" cx="73.517" cy="104.706" rx="45.994" ry="47.017"/>
+
+    <line fill="none" stroke="#EFEFEF" stroke-width="3" stroke-linecap="round" stroke-miterlimit="10" x1="60.375" y1="90.602" x2="86.657" y2="114.781"/>
+
+    <line fill="none" stroke="#EFEFEF" stroke-width="3" stroke-linecap="round" stroke-miterlimit="10" x1="84.374" y1="90.479" x2="59.866" y2="116.53"/>
+  </g>
+  <g id="icon" >
+    <svg width=250 height=250 
+         x=125 y=125
+         xmlns="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+	{icon}
+    </svg>
+  </g>
+  <g id="Layer_2">
+    <polyline fill="#28AF7E" stroke="#38AC7F" stroke-width="2" stroke-miterlimit="10" points="41.539,310.452 10,304.181
+                                                                                              37.079,351.139 13.504,395.523 80.87,397.116 74.83,382.092 	"/>
+    <polyline fill="#28AF7E" stroke="#38AC7F" stroke-width="2" stroke-miterlimit="10" points="458.46,310.452 490,304.181
+                                                                                              462.919,351.139 486.496,395.523 419.129,397.116 425.169,382.092 	"/>
+    <path fill="#35C174" stroke="#4CB680" stroke-width="2" stroke-miterlimit="10" d="M27.522,294.742c0,0-0.876,40.786,32.853,95.416
+                                                                                     h377.152c0,0,27.158-35.01,36.795-95.416H27.522z"/>
+  </g>
+</svg>
