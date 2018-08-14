@@ -20,7 +20,8 @@ class CircleCardModal extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-        price: _.get(props.popup, 'default_number', 0)
+        price: _.get(props.popup, 'default_number', 0),
+        charges: _.get(props.popup, 'button.default_number', 0),
     }
     }
 
@@ -34,6 +35,8 @@ class CircleCardModal extends React.Component {
         const min = _.get(this.props.popup, 'min', null)
         const max = _.get(this.props.popup, 'max', null)
 
+        const button = _.get(this.props.popup, 'button', {})
+        const increase_charges =  _.get(this.props.popup, 'button.increase_number', 1)
         return (
             <Modal isVisible={_.get(this.props, 'show', false)} onBackdropPress={() => { }}>
                 <View style={styles.modalContent}>
@@ -69,6 +72,7 @@ class CircleCardModal extends React.Component {
 
                             <Button transparent onPress={() => {
                                     const price = this.state.price - increase_number
+                                    const charges = this.state.charges - increase_charges
                                     if(min) {
                                         if(price < min) {
                                             return
@@ -77,6 +81,7 @@ class CircleCardModal extends React.Component {
                                     this.setState((previousState) => {
                                         return {
                                             price: price,
+                                            charges: charges,
                                         }
                                     })
                                 }}
@@ -93,6 +98,7 @@ class CircleCardModal extends React.Component {
                             </Item>
                             <Button transparent onPress={() => {
                                     const price = this.state.price + increase_number
+                                    const charges = this.state.charges + increase_charges
                                     if(max) {
                                         if(price > max) {
                                             return
@@ -101,6 +107,7 @@ class CircleCardModal extends React.Component {
                                     this.setState((previousState) => {
                                         return {
                                             price: price,
+                                            charges: charges,
                                         }
                                     })
                                 }}
@@ -112,7 +119,7 @@ class CircleCardModal extends React.Component {
                     
                 </View>
                 <Button full success style={{ backgroundColor: "#FF006F", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, padding: 0, margin: 0, }}>
-                    <Text>ADD (+0.75 / MO)</Text>
+                    <Text>{ `${button.operation} (+${this.state.charges} / ${button.per})`}</Text>
                 </Button>
         </Modal>
         )

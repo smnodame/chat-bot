@@ -296,7 +296,7 @@ const config = {
                 popup: {
                   image: require('./images/gallery.svg'),
                   title: 'GALLERY',
-                  description: 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available.',
+                  description: 'Gallery may refer to: Contents.',
                   min: 1000,
                   max: 10000,
                   currency: '$',
