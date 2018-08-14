@@ -21,7 +21,7 @@ import ButtonQuestion from './component/ButtonQuestion'
 import CalendarQuestion from './component/CalendarQuestion'
 import CheckboxQuestion from './component/CheckboxQuestion'
 import MultiInputQuestion from './component/MultiInputQuestion'
-import CircleCardQuestion from './component/CircleCardQuestion'
+import { CircleCardQuestion, CircleCardAction } from './component/CircleCardQuestion'
 import { ProductCardQuestion, ProductCardAction } from './component/ProductCardQuestion'
 import { OptionFeatureQuestion, OptionFeatureAction }  from './component/OptionFeatureQuestion'
 
@@ -559,6 +559,10 @@ export default class Example extends React.Component {
     } else if(mode == 'OPTION-FEATURE') {
       return (
         <OptionFeatureAction onSend={this.onSend} question={this.state.current_question} />
+      )
+    } else if(mode == 'CIRCLE-CARD') {
+      return (
+        <CircleCardAction onSend={this.onSend} question={this.state.current_question} />
       )
     } else {
       return <View style={{ height: 15 }} />

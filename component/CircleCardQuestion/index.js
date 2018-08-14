@@ -191,7 +191,7 @@ class CircleCard extends React.Component {
 }
 
 
-export default class CircleCardQuestion extends React.Component {
+class CircleCardQuestion extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
@@ -223,4 +223,29 @@ export default class CircleCardQuestion extends React.Component {
             </View>
         )
     }
+}
+
+class CircleCardAction extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+        }
+    }
+
+    render() {
+        return (
+            <View style={{ flexDirection: 'row' }}>
+                <Button full light onPress={() => { 
+                    
+                }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
+                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `ADD (+3.25/MO)` }</Text>
+                </Button>
+            </View>
+        )
+    }
+}
+
+export {
+    CircleCardQuestion,
+    CircleCardAction
 }
