@@ -293,23 +293,23 @@ const config = {
                 price: 1000,
                 currency: '$',
                 selected: true,
-                card: {
-                  image: require('./images/hamberger.svg'),
-                  title: 'Crabstick Cocktail',
+                popup: {
+                  image: require('./images/gallery.svg'),
+                  title: 'GALLERY',
                   description: 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available.',
                   min: 1000,
                   max: 10000,
                   currency: '$',
                   default_number: 2000,
-                  increase_number: 1000
+                  increase_number: 1000,
+                  button: {
+                    operation: 'ADD',
+                    default_number: 0.75,
+                    increase_number: 0.75,
+                    per: 'MO',
+                    key: 'price',
+                  },
                 },
-                button: {
-                  operation: 'ADD',
-                  default_number: 0.75,
-                  increase_number: 0.75,
-                  per: 'MO',
-                  key: 'price',
-                }
             },
             {
                 key: 2,
