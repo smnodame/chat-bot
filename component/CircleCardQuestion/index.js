@@ -14,6 +14,61 @@ import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Bo
 import SvgUri from 'react-native-svg-uri'
 import styles from '../styles'
 
+class CircleCard extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+      }
+    }
+
+    render = () => {
+        const item = this.props.item
+        return (
+            <View style={{ width: 165, paddingLeft: 10, }} key={item.key}>
+                <TouchableOpacity onPress={() => {
+                }}>
+                    {
+                        item.selected && <SvgUri
+                            width="160"
+                            height="160"
+                            source={require('../../images/added.svg')}
+                        />
+                    }
+                    {
+                        !item.selected && <SvgUri
+                            width="160"
+                            height="160"
+                            source={require('../../images/blank.svg')}
+                        />
+                    }
+                    <SvgUri
+                        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}
+                        width="60"
+                        height="60"
+                        source={item.image}
+                    />
+                    {
+                        item.selected && <SvgUri
+                            style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, }}
+                            width="160"
+                            height="160"
+                            source={require('../../images/ribbon.svg')}
+                        />
+                    }
+                    {
+                        item.selected && <Text style={{ position: 'absolute', textAlign: 'center', width: '100%', top: 100, color: 'white', }}>
+                            { `${item.currency} ${item.price}` }
+                        </Text>
+                    }
+                    
+                </TouchableOpacity>
+                <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', textAlign: 'center', }}>{ item.name }</Text>
+            </View>
+        )
+    }
+}
+
+
 export default class CircleCardQuestion extends React.Component {
     constructor(props) {
       super(props)
@@ -22,34 +77,9 @@ export default class CircleCardQuestion extends React.Component {
     }
 
     render = () => {
-        const title = 'Add Extra Coverage'
-        const description = 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available.'
-        const options = [
-            {
-                key: 1,
-                image: require('../../images/gallery.svg'),
-                name: 'GALLERY',
-                price: 1000,
-                currency: '$',
-                selected: true,
-            },
-            {
-                key: 2,
-                image: require('../../images/calendar.svg'),
-                name: 'CALENDAR',
-                price: 200,
-                currency: '$',
-                selected: false,
-            },
-            {
-                key: 2,
-                image: require('../../images/video.svg'),
-                name: 'VIDEO',
-                price: 500,
-                currency: '฿',
-                selected: false,
-            }
-        ]
+        const title = _.get(this.props.question, 'input.title', '')
+        const description = _.get(this.props.question, 'input.description', '')
+        const options = _.get(this.props.question, 'input.options', [])
         return (
             <View style={{ backgroundColor: "#F8F8F8", paddingBottom: 20, }}>
                 <Text style={{ color: "#4B4B4B", fontSize: 16, fontWeight: "bold", padding: 10, textAlign: "center",  }}>{ title }</Text>
@@ -64,46 +94,7 @@ export default class CircleCardQuestion extends React.Component {
                         showsHorizontalScrollIndicator={false}
                         data={options}
                         renderItem={({item}) => (
-                            <View style={{ width: 165, paddingLeft: 10, }} key={item.key}>
-                                <TouchableOpacity onPress={() => {
-                                }}>
-                                    {
-                                        item.selected && <SvgUri
-                                            width="160"
-                                            height="160"
-                                            source={require('../../images/added.svg')}
-                                        />
-                                    }
-                                    {
-                                        !item.selected && <SvgUri
-                                            width="160"
-                                            height="160"
-                                            source={require('../../images/blank.svg')}
-                                        />
-                                    }
-                                    <SvgUri
-                                        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}
-                                        width="60"
-                                        height="60"
-                                        source={item.image}
-                                    />
-                                    {
-                                        item.selected && <SvgUri
-                                            style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, }}
-                                            width="160"
-                                            height="160"
-                                            source={require('../../images/ribbon.svg')}
-                                        />
-                                    }
-                                    {
-                                        item.selected && <Text style={{ position: 'absolute', textAlign: 'center', width: '100%', top: 100, color: 'white', }}>
-                                            { `${item.currency} ${item.price}` }
-                                        </Text>
-                                    }
-                                    
-                                </TouchableOpacity>
-                                <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', textAlign: 'center', }}>{ item.name }</Text>
-                            </View>
+                            <CircleCard item={item} />
                         )}
                     />
                 </View>
