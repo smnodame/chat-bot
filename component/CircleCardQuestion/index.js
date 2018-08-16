@@ -207,7 +207,8 @@ class CircleCard extends React.Component {
       this.state = {
           show: false,
           selected: this.props.item.selected,
-          selected_price: 0,
+          selected_price: _.get(this.props.item, 'popup.step_1.default_number', 0),
+          index: this.props.index
       }
     }
 
@@ -228,6 +229,7 @@ class CircleCard extends React.Component {
         const total = _.get(interval_state, `${id}.total`, 0)
         const on_update_total = _.get(interval_state, `${id}.on_update_total`, () => {})
         _.set(interval_state, `${id}.total`, total + selected_charges) 
+        _.set(interval_state, `${id}.chosen.${this.state.index}`, true)
         on_update_total(_.get(interval_state, `${id}.total`, 0))
     }
     
@@ -270,6 +272,7 @@ class CircleCard extends React.Component {
                                     const total = _.get(interval_state, `${id}.total`, 0)
                                     const on_update_total = _.get(interval_state, `${id}.on_update_total`, () => {})
                                     _.set(interval_state, `${id}.total`, total - this.state.selected_charges) 
+                                    _.set(interval_state, `${id}.chosen.${this.state.index}`, false)
                                     on_update_total(_.get(interval_state, `${id}.total`, 0))
                                 })
                             }}
@@ -325,8 +328,8 @@ class CircleCardQuestion extends React.Component {
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         data={options}
-                        renderItem={({item}) => (
-                            <CircleCard item={item} id={id} />
+                        renderItem={({item, index}) => (
+                            <CircleCard item={item} id={id} index={index} />
                         )}
                     />
                 </View>
@@ -339,11 +342,14 @@ class CircleCardAction extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            total: 0,
+            total: _.get(props.question, 'input.button.default_number', 0),
+            operation: _.get(props.question, 'input.button.operation', 'ADD'),
+            per: _.get(props.question, 'input.button.per', 'MO')
         }
 
         const id = _.get(props.question, 'id', '')
-        _.set(interval_state, `${id}.on_update_total`, this.on_update_total) 
+        _.set(interval_state, `${id}.on_update_total`, this.on_update_total)
+        _.set(interval_state, `${id}.total`, this.state.total)  
     }
 
     on_update_total = (total) => {
@@ -352,13 +358,32 @@ class CircleCardAction extends React.Component {
         })
     }
 
+    get_message = () => {
+        const key = _.get(this.props.question, 'input.button.key', '')
+        const message = _.get(this.props.question, 'message', '')
+
+        return message.replace(`{${key}}`, this.state.total)
+    }
+
     render() {
+        const trigger = _.get(this.props.question, 'trigger', null)
+        const message_func = _.get(this.props.question, 'input.message_func', this.get_message)
+        const id = _.get(this.props.question, 'id', '')
+
         return (
             <View style={{ flexDirection: 'row' }}>
                 <Button full light onPress={() => { 
-                    
+                    const chosen = _.get(interval_state, `${id}.chosen`, {})
+                    const args = Object.keys(chosen).filter((key) => {
+                        return chosen[key]
+                    }).map((key) => {
+                        return this.props.question.input.options[parseInt(key)]
+                    })
+                    this.props.onSend({ 
+                        text: message_func(args, this.state.total)
+                    }, trigger)
                 }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
-                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `ADD (+${this.state.total}/MO)` }</Text>
+                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${this.state.operation} (+${this.state.total}/${this.state.per})` }</Text>
                 </Button>
             </View>
         )

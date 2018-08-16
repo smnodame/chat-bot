@@ -281,16 +281,22 @@ const config = {
     {
       id: '16',
       question: 'choose you option!',
+      message: 'You have to pay more {total}',
       input: {
         mode: 'CIRCLE-CARD',
         title: 'Add Extra Coverage',
         description: 'Parsley sausage, Crab stick, Mozzarella Cheese. With the choices of crust between Pan and Crispy Thin available.',
+        button: {
+          operation: 'ADD',
+          default_number: 5,
+          per: 'MO',
+          key: 'total',
+        },
         options: [
             {
                 key: 1,
                 image: require('./images/gallery.svg'),
                 name: 'GALLERY',
-                price: 1000,
                 currency: '$',
                 selected: true,
                 popup: {
@@ -333,7 +339,6 @@ const config = {
                 key: 2,
                 image: require('./images/calendar.svg'),
                 name: 'CALENDAR',
-                price: 200,
                 currency: '$',
                 selected: false,
                 popup: {

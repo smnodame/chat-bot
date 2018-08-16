@@ -220,7 +220,7 @@ class OptionFeatureAction extends React.Component {
                         return this.props.question.input.options[parseInt(key)]
                     })
                     this.props.onSend({ 
-                        text: message_func(args)
+                        text: message_func(args, this.state.total)
                     }, trigger)
                 }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
                     <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `${operation} (+${this.state.total}/${per})` }</Text>
