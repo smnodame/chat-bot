@@ -214,7 +214,7 @@ const config = {
           text: 'TAKE IT'
         }
       },
-      trigger: '12',
+      trigger: '15',
     },
     {
       id: '15',
@@ -276,12 +276,13 @@ const config = {
         }
       },
       system: true,
-      trigger: '2',
+      trigger: '16',
     },
     {
       id: '16',
       question: 'choose you option!',
       message: 'You have to pay more {total}',
+      trigger: '2',
       input: {
         mode: 'CIRCLE-CARD',
         title: 'Add Extra Coverage',
@@ -588,7 +589,7 @@ export default class Example extends React.Component {
           mode == 'OPTION-FEATURE' && <OptionFeatureQuestion question={props.currentMessage.question} />
         }
         {
-          mode == 'CIRCLE-CARD' && <CircleCardQuestion question={this.state.current_question} />
+          mode == 'CIRCLE-CARD' && <CircleCardQuestion question={props.currentMessage.question} />
         }
         {
           state_id.toString() != props_id.toString() && <View style={{ height: 15, }} />
