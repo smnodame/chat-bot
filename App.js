@@ -337,20 +337,43 @@ const config = {
                 currency: '$',
                 selected: false,
                 popup: {
-                  image: require('./images/calendar.svg'),
-                  title: 'CALENDAR',
-                  description: 'A calendar is a system of organizing days for social, religious, commercial or administrative purposes. ',
-                  min: 50,
-                  max: 100,
-                  currency: '$',
-                  default_number: 60,
-                  increase_number: 1,
-                  button: {
-                    operation: 'เพิ่ม',
-                    default_number: 0.25,
-                    increase_number: 0.25,
-                    per: 'MO',
+                  step_1: {
+                    image: require('./images/calendar.svg'),
+                    title: 'CALENDAR',
+                    description: 'A calendar is a system of organizing days for social, religious, commercial or administrative purposes. ',
+                    min: 50,
+                    max: 100,
+                    currency: '$',
+                    default_number: 60,
+                    increase_number: 1,
+                    button: {
+                      operation: 'เพิ่ม',
+                      default_number: 0.25,
+                      increase_number: 0.25,
+                      per: 'MO',
+                    },
                   },
+                  step_2: {
+                    title: 'IMPORTANT',
+                    description: 'Gallery may refer to: Contents.',
+                    items: [
+                      {
+                        image: require('./images/location.svg'),
+                        description: '"Location" is the debut single by American singer Khalid. It was released on August 26, 2016'
+                      },
+                      {
+                        image: require('./images/phone.svg'),
+                        description: 'A mobile phone, known as a cell phone in North America'
+                      },
+                      {
+                        image: require('./images/phone.svg'),
+                        description: 'A mobile phone, known as a cell phone in North America'
+                      }
+                    ],
+                    button: {
+                      text: 'CONFIRM',
+                    },
+                  }
                 },
             },
             {
@@ -361,20 +384,35 @@ const config = {
                 currency: '฿',
                 selected: false,
                 popup: {
-                  image: require('./images/video.svg'),
-                  title: 'VIDEO',
-                  description: 'Video is an electronic medium for the recording, copying, playback, broadcasting, and display of moving visual media. ',
-                  min: 0,
-                  max: 100,
-                  currency: '฿',
-                  default_number: 0,
-                  increase_number: 1,
-                  button: {
-                    operation: 'ADD',
-                    default_number: 0.50,
-                    increase_number: 0.50,
-                    per: 'MO',
+                  step_1: {
+                    image: require('./images/video.svg'),
+                    title: 'VIDEO',
+                    description: 'Video is an electronic medium for the recording, copying, playback, broadcasting, and display of moving visual media. ',
+                    min: 0,
+                    max: 100,
+                    currency: '฿',
+                    default_number: 0,
+                    increase_number: 1,
+                    button: {
+                      operation: 'ADD',
+                      default_number: 0.50,
+                      increase_number: 0.50,
+                      per: 'MO',
+                    },
                   },
+                  step_2: {
+                    title: 'IMPORTANT',
+                    description: 'Gallery may refer to: Contents.',
+                    items: [
+                      {
+                        image: require('./images/location.svg'),
+                        description: '"Location" is the debut single by American singer Khalid. It was released on August 26, 2016'
+                      },
+                    ],
+                    button: {
+                      text: 'CONFIRM',
+                    },
+                  }
                 },
             }
         ]
