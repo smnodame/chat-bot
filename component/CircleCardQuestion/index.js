@@ -180,8 +180,12 @@ class CircleCardModal extends React.Component {
                         </View>
                         <Button full light 
                             onPress={() => {
-                                this.props.on_selected()
-                                this.props.on_close()
+                                this.setState({
+                                    step: 1,
+                                }, () => {
+                                    this.props.on_selected(this.state.price)
+                                    this.props.on_close()
+                                })
                             }}
                             style={{ backgroundColor: "#F8F8F8", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
                             <Text style={{ color: "#4B4B4B", fontSize: 14, }} >GOT IT</Text>
@@ -199,6 +203,7 @@ class CircleCard extends React.Component {
       this.state = {
           show: false,
           selected: this.props.item.selected,
+          selected_price: 0,
       }
     }
 
@@ -208,12 +213,13 @@ class CircleCard extends React.Component {
         })
     }
     
-    on_selected = () => {
+    on_selected = (selected_price) => {
         this.setState({
-            selected: true
+            selected: true,
+            selected_price
         })
     }
-
+    
     render = () => {
         const item = this.props.item
         return (
@@ -246,7 +252,9 @@ class CircleCard extends React.Component {
                     {
                         this.state.selected && <Button transparent light 
                             onPress={() => {
-                                alert('remove')
+                                this.setState({
+                                    selected: false,
+                                })
                             }}
                             style={{ zIndex: 9999, position: 'absolute', top: 0, left: 0, width: 60, height: 60, }}>
                             <View />
@@ -262,7 +270,7 @@ class CircleCard extends React.Component {
                     }
                     {
                         this.state.selected && <Text style={{ position: 'absolute', textAlign: 'center', width: '100%', top: 100, color: 'white', }}>
-                            { `${item.currency} ${item.price}` }
+                            { `${item.currency} ${this.state.selected_price}` }
                         </Text>
                     }
                     
