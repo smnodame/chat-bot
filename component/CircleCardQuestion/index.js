@@ -23,6 +23,7 @@ class CircleCardModal extends React.Component {
         this.state = {
             price: _.get(props.popup, 'default_number', 0),
             charges: _.get(props.popup, 'button.default_number', 0),
+            step: 1,
         }
     }
 
@@ -39,99 +40,154 @@ class CircleCardModal extends React.Component {
         const button = _.get(this.props.popup, 'button', {})
         const increase_charges =  _.get(this.props.popup, 'button.increase_number', 1)
         return (
-            <Modal isVisible={_.get(this.props, 'show', false)} onBackdropPress={() => { }}>
-                <View style={styles.modalContent}>
-                    <Button transparent style={{ position: 'absolute', right: 0, top: 0, zIndex: 999, }} 
-                        onPress={() => { this.props.on_close() }}
-                    >
-                        <Icon name='close' style={{ color: "#4B4B4B", fontSize: 35,  }} />
-                    </Button>
-                    <View style={{ padding: 15 }}>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, }}>
-                        <SvgUri
-                            width="60"
-                            height="60"
-                            source={image}
-                        />
-                        </View>
-                        <View>
-                        <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 16, fontWeight: 'bold' }}>
-                            { title }
-                        </Text>
-                        </View> 
-                        <View style={{ marginBottom: 10 }}>
-                        <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 14 }}>
-                            { description }
-                        </Text>
-                        </View> 
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}>
+                <Modal isVisible={_.get(this.props, 'show', false)} onBackdropPress={() => { }}>
+                    {
+                    this.state.step == 1 && <View>
+                        <View style={styles.modalContent}>
+                            <Button transparent style={{ position: 'absolute', right: 0, top: 0, zIndex: 999, }} 
+                                onPress={() => { this.props.on_close() }}
+                            >
+                                <Icon name='close' style={{ color: "#4B4B4B", fontSize: 35,  }} />
+                            </Button>
+                            <View style={{ padding: 15 }}>
+                                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, }}>
+                                <SvgUri
+                                    width="60"
+                                    height="60"
+                                    source={image}
+                                />
+                                </View>
+                                <View>
+                                <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 16, fontWeight: 'bold' }}>
+                                    { title }
+                                </Text>
+                                </View> 
+                                <View style={{ marginBottom: 10 }}>
+                                <Text style={{ fontSize: 16, textAlign: 'center', padding: 5, color: "#4B4B4B", fontSize: 14 }}>
+                                    { description }
+                                </Text>
+                                </View> 
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}>
 
-                            <Button transparent onPress={() => {
-                                    const price = this.state.price - increase_number
-                                    const charges = this.state.charges - increase_charges
-                                    if(min) {
-                                        if(price < min) {
-                                            return
-                                        }
-                                    }
-                                    this.setState((previousState) => {
-                                        return {
-                                            price: price,
-                                            charges: charges,
-                                        }
-                                    })
-                                }}
-                            >
-                                <Icon name="ios-remove-circle-outline" style={styles.icon}/>
-                            </Button>
-                            <Item regular style={[styles.textInput, { borderColor: "#999", flexDirection: "row" }]}>
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#999' }}>
-                                    { currency }
-                                </Text>
-                                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#4B4B4B', flex: 1, textAlign: "center" }}>
-                                    { this.state.price }
-                                </Text>
-                            </Item>
-                            <Button transparent onPress={() => {
-                                    const price = this.state.price + increase_number
-                                    const charges = this.state.charges + increase_charges
-                                    if(max) {
-                                        if(price > max) {
-                                            return
-                                        }
-                                    }
-                                    this.setState((previousState) => {
-                                        return {
-                                            price: price,
-                                            charges: charges,
-                                        }
-                                    })
-                                }}
-                            >
-                                <Icon name="ios-add-circle-outline" style={styles.icon}/>
-                            </Button>
+                                    <Button transparent onPress={() => {
+                                            const price = this.state.price - increase_number
+                                            const charges = this.state.charges - increase_charges
+                                            if(min) {
+                                                if(price < min) {
+                                                    return
+                                                }
+                                            }
+                                            this.setState((previousState) => {
+                                                return {
+                                                    price: price,
+                                                    charges: charges,
+                                                }
+                                            })
+                                        }}
+                                    >
+                                        <Icon name="ios-remove-circle-outline" style={styles.icon}/>
+                                    </Button>
+                                    <Item regular style={[styles.textInput, { borderColor: "#999", flexDirection: "row" }]}>
+                                        <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#999' }}>
+                                            { currency }
+                                        </Text>
+                                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#4B4B4B', flex: 1, textAlign: "center" }}>
+                                            { this.state.price }
+                                        </Text>
+                                    </Item>
+                                    <Button transparent onPress={() => {
+                                            const price = this.state.price + increase_number
+                                            const charges = this.state.charges + increase_charges
+                                            if(max) {
+                                                if(price > max) {
+                                                    return
+                                                }
+                                            }
+                                            this.setState((previousState) => {
+                                                return {
+                                                    price: price,
+                                                    charges: charges,
+                                                }
+                                            })
+                                        }}
+                                    >
+                                        <Icon name="ios-add-circle-outline" style={styles.icon}/>
+                                    </Button>
+                                </View>
+                            </View>
+                            
                         </View>
+                        <Button 
+                            full success 
+                            style={{ 
+                                backgroundColor: "#FF006F", borderBottomLeftRadius: 5, 
+                                borderBottomRightRadius: 5, borderWidth: 0, padding: 0, margin: 0, 
+                            }}
+                            onPress={() => {
+                                this.setState({
+                                    step: 2,
+                                })
+                            }}
+                        >
+                            <Text>{ `${button.operation} (+${this.state.charges} / ${button.per})`}</Text>
+                        </Button>
                     </View>
-                    
-                </View>
-                <Button 
-                    full success 
-                    style={{ 
-                        backgroundColor: "#FF006F", borderBottomLeftRadius: 5, 
-                        borderBottomRightRadius: 5, borderWidth: 0, padding: 0, margin: 0, 
-                    }}
-                    onPress={() => {
-                        {/* this.props.on_selected()
-                        this.props.on_close() */}
-                    }}
-                >
-                    <Text>{ `${button.operation} (+${this.state.charges} / ${button.per})`}</Text>
-                </Button>
+                }
+                {
+                    this.state.step == 2 && <View>
+                        <View style={styles.modalContent}>
+                            <Button transparent style={{ position: 'absolute', left: 0, top: 0, padding: 5, zIndex: 9999 }} onPress={() => {
+                                this.setState({
+                                    step: 1,
+                                })
+                            }}>
+                                <Icon name='arrow-back' style={{ color: "#4B4B4B", }} />
+                            </Button>
+                            <View style={{ padding: 15 }}>
+                                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 15, marginTop: 10, }}>
+                                    <View style={{ padding: 5 }}>
+                                        <Text style={{ color: "#4B4B4B", fontSize: 15, fontWeight: 'bold' }} >IMPORTANT</Text>
+                                    </View>
+                                </View>
+                                <View style={{ flexDirection: "row", padding: 10, width: '100%', }}>
+                                    <SvgUri
+                                        style={{ paddingRight: 18, paddingTop: 5, }}
+                                        width="20"
+                                        height="20"
+                                        source={require('../../images/phone.svg')}
+                                    />
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', }}>Taylor Swift Reputation Stadium a Tour with special guests Camlia Cabello and CharliXOX</Text>
+                                    </View>
+                                </View>
+                                <View style={{ flexDirection: "row", padding: 10, width: '100%', }}>
+                                    <SvgUri
+                                        style={{ paddingRight: 18, paddingTop: 5, }}
+                                        width="20"
+                                        height="20"
+                                        source={require('../../images/location.svg')} 
+                                    />
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', }}>Taylor Alison Swift (born December 13, 1989) is an American singer-songwriter</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                        <Button full light 
+                            onPress={() => {
+                                this.props.on_selected()
+                                this.props.on_close()
+                            }}
+                            style={{ backgroundColor: "#F8F8F8", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
+                            <Text style={{ color: "#4B4B4B", fontSize: 14, }} >GOT IT</Text>
+                        </Button> 
+                    </View>
+                }
         </Modal>
         )
     }
@@ -187,13 +243,15 @@ class CircleCard extends React.Component {
                         height="60"
                         source={item.image}
                     />
-                    <Button transparent light 
-                        onPress={() => {
-                            alert('remove')
-                        }}
-                        style={{ zIndex: 9999, position: 'absolute', top: 0, left: 0, width: 60, height: 60, }}>
-                        <View />
-                    </Button>
+                    {
+                        this.state.selected && <Button transparent light 
+                            onPress={() => {
+                                alert('remove')
+                            }}
+                            style={{ zIndex: 9999, position: 'absolute', top: 0, left: 0, width: 60, height: 60, }}>
+                            <View />
+                        </Button>
+                    }
                     {
                         this.state.selected && <SvgUri
                             style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, }}
