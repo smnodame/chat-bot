@@ -18,11 +18,11 @@ import styles from '../styles'
 
 class CircleCardModal extends React.Component {
     constructor(props) {
-      super(props)
-      this.state = {
-        price: _.get(props.popup, 'default_number', 0),
-        charges: _.get(props.popup, 'button.default_number', 0),
-    }
+        super(props)
+        this.state = {
+            price: _.get(props.popup, 'default_number', 0),
+            charges: _.get(props.popup, 'button.default_number', 0),
+        }
     }
 
     render = () => {
@@ -118,7 +118,17 @@ class CircleCardModal extends React.Component {
                     </View>
                     
                 </View>
-                <Button full success style={{ backgroundColor: "#FF006F", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, padding: 0, margin: 0, }}>
+                <Button 
+                    full success 
+                    style={{ 
+                        backgroundColor: "#FF006F", borderBottomLeftRadius: 5, 
+                        borderBottomRightRadius: 5, borderWidth: 0, padding: 0, margin: 0, 
+                    }}
+                    onPress={() => {
+                        {/* this.props.on_selected()
+                        this.props.on_close() */}
+                    }}
+                >
                     <Text>{ `${button.operation} (+${this.state.charges} / ${button.per})`}</Text>
                 </Button>
         </Modal>
@@ -129,13 +139,20 @@ class CircleCard extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-          show: false
+          show: false,
+          selected: this.props.item.selected,
       }
     }
 
     on_close = () => {
         this.setState({
             show: false
+        })
+    }
+    
+    on_selected = () => {
+        this.setState({
+            selected: true
         })
     }
 
@@ -149,14 +166,14 @@ class CircleCard extends React.Component {
                     })
                 }}>
                     {
-                        item.selected && <SvgUri
+                        this.state.selected && <SvgUri
                             width="160"
                             height="160"
                             source={require('../../images/added.svg')}
                         />
                     }
                     {
-                        !item.selected && <SvgUri
+                        !this.state.selected && <SvgUri
                             width="160"
                             height="160"
                             source={require('../../images/blank.svg')}
@@ -169,7 +186,7 @@ class CircleCard extends React.Component {
                         source={item.image}
                     />
                     {
-                        item.selected && <SvgUri
+                        this.state.selected && <SvgUri
                             style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, }}
                             width="160"
                             height="160"
@@ -177,14 +194,14 @@ class CircleCard extends React.Component {
                         />
                     }
                     {
-                        item.selected && <Text style={{ position: 'absolute', textAlign: 'center', width: '100%', top: 100, color: 'white', }}>
+                        this.state.selected && <Text style={{ position: 'absolute', textAlign: 'center', width: '100%', top: 100, color: 'white', }}>
                             { `${item.currency} ${item.price}` }
                         </Text>
                     }
                     
                 </TouchableOpacity>
                 <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', textAlign: 'center', }}>{ item.name }</Text>
-                <CircleCardModal show={this.state.show} on_close={this.on_close} popup={item.popup} />
+                <CircleCardModal show={this.state.show} on_close={this.on_close} popup={item.popup} on_selected={this.on_selected} />
             </View>
         )
     }
