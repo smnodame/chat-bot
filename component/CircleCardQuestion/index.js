@@ -9,6 +9,7 @@ import {
   Switch,
   DatePickerIOS,
   FlatList,
+  TouchableWithoutFeedback,
 } from 'react-native'
 import { Container, Header, Content, List, ListItem, Text, Left, Right, Icon, Body, CheckBox, Button, Item, Input, Card, CardItem, } from 'native-base'
 import SvgUri from 'react-native-svg-uri'
@@ -135,6 +136,7 @@ class CircleCardModal extends React.Component {
         )
     }
 }
+
 class CircleCard extends React.Component {
     constructor(props) {
       super(props)
@@ -185,6 +187,13 @@ class CircleCard extends React.Component {
                         height="60"
                         source={item.image}
                     />
+                    <Button transparent light 
+                        onPress={() => {
+                            alert('remove')
+                        }}
+                        style={{ zIndex: 9999, position: 'absolute', top: 0, left: 0, width: 60, height: 60, }}>
+                        <View />
+                    </Button>
                     {
                         this.state.selected && <SvgUri
                             style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, }}
