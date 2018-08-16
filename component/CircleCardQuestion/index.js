@@ -16,6 +16,7 @@ import SvgUri from 'react-native-svg-uri'
 import Modal from 'react-native-modal'
 import styles from '../styles'
 
+const interval_state = {}
 
 class CircleCardModal extends React.Component {
     constructor(props) {
@@ -186,7 +187,7 @@ class CircleCardModal extends React.Component {
                                 this.setState({
                                     step: 1,
                                 }, () => {
-                                    this.props.on_selected(this.state.price)
+                                    this.props.on_selected(this.state.price, this.state.charges)
                                     this.props.on_close()
                                 })
                             }}
@@ -216,11 +217,18 @@ class CircleCard extends React.Component {
         })
     }
     
-    on_selected = (selected_price) => {
+    on_selected = (selected_price, selected_charges) => {
         this.setState({
             selected: true,
-            selected_price
+            selected_price,
+            selected_charges,
         })
+
+        const id = this.props.id
+        const total = _.get(interval_state, `${id}.total`, 0)
+        const on_update_total = _.get(interval_state, `${id}.on_update_total`, () => {})
+        _.set(interval_state, `${id}.total`, total + selected_charges) 
+        on_update_total(_.get(interval_state, `${id}.total`, 0))
     }
     
     render = () => {
@@ -257,6 +265,12 @@ class CircleCard extends React.Component {
                             onPress={() => {
                                 this.setState({
                                     selected: false,
+                                }, () => {
+                                    const id = this.props.id
+                                    const total = _.get(interval_state, `${id}.total`, 0)
+                                    const on_update_total = _.get(interval_state, `${id}.on_update_total`, () => {})
+                                    _.set(interval_state, `${id}.total`, total - this.state.selected_charges) 
+                                    on_update_total(_.get(interval_state, `${id}.total`, 0))
                                 })
                             }}
                             style={{ zIndex: 9999, position: 'absolute', top: 0, left: 0, width: 60, height: 60, }}>
@@ -294,6 +308,7 @@ class CircleCardQuestion extends React.Component {
     }
 
     render = () => {
+        const id = _.get(this.props.question, 'id', null)
         const title = _.get(this.props.question, 'input.title', '')
         const description = _.get(this.props.question, 'input.description', '')
         const options = _.get(this.props.question, 'input.options', [])
@@ -311,7 +326,7 @@ class CircleCardQuestion extends React.Component {
                         showsHorizontalScrollIndicator={false}
                         data={options}
                         renderItem={({item}) => (
-                            <CircleCard item={item} />
+                            <CircleCard item={item} id={id} />
                         )}
                     />
                 </View>
@@ -324,7 +339,17 @@ class CircleCardAction extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            total: 0,
         }
+
+        const id = _.get(props.question, 'id', '')
+        _.set(interval_state, `${id}.on_update_total`, this.on_update_total) 
+    }
+
+    on_update_total = (total) => {
+        this.setState({
+            total
+        })
     }
 
     render() {
@@ -333,7 +358,7 @@ class CircleCardAction extends React.Component {
                 <Button full light onPress={() => { 
                     
                 }} style={{ flex: 1, backgroundColor: "#F8F8F8", borderColor: "#EEE", borderWidth: 0.5, height: 60, borderTopWidth: 1, }}>
-                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `ADD (+3.25/MO)` }</Text>
+                    <Text numberOfLines={1} style={{ color: "#4B4B4B", fontSize: 14, }}>{ `ADD (+${this.state.total}/MO)` }</Text>
                 </Button>
             </View>
         )
