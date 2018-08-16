@@ -294,20 +294,39 @@ const config = {
                 currency: '$',
                 selected: true,
                 popup: {
-                  image: require('./images/gallery.svg'),
-                  title: 'GALLERY',
-                  description: 'Gallery may refer to: Contents.',
-                  min: 1000,
-                  max: 10000,
-                  currency: '$',
-                  default_number: 2000,
-                  increase_number: 1000,
-                  button: {
-                    operation: 'ADD',
-                    default_number: 0.75,
-                    increase_number: 0.75,
-                    per: 'MO',
+                  step_1: {
+                    image: require('./images/gallery.svg'),
+                    title: 'GALLERY',
+                    description: 'Gallery may refer to: Contents.',
+                    min: 1000,
+                    max: 10000,
+                    currency: '$',
+                    default_number: 2000,
+                    increase_number: 1000,
+                    button: {
+                      operation: 'ADD',
+                      default_number: 0.75,
+                      increase_number: 0.75,
+                      per: 'MO',
+                    },
                   },
+                  step_2: {
+                    title: 'IMPORTANT',
+                    description: 'Gallery may refer to: Contents.',
+                    items: [
+                      {
+                        image: require('./images/location.svg'),
+                        description: '"Location" is the debut single by American singer Khalid. It was released on August 26, 2016'
+                      },
+                      {
+                        image: require('./images/phone.svg'),
+                        description: 'A mobile phone, known as a cell phone in North America'
+                      }
+                    ],
+                    button: {
+                      text: 'GOT IT',
+                    },
+                  }
                 },
             },
             {

@@ -21,24 +21,32 @@ class CircleCardModal extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            price: _.get(props.popup, 'default_number', 0),
-            charges: _.get(props.popup, 'button.default_number', 0),
+            price: _.get(props.popup.step_1, 'default_number', 0),
+            charges: _.get(props.popup.step_1, 'button.default_number', 0),
             step: 1,
         }
     }
 
     render = () => {
-        const image = _.get(this.props.popup, 'image', null)
-        const title = _.get(this.props.popup, 'title', null)
-        const description = _.get(this.props.popup, 'description', null)
+        // step 1
+        const image = _.get(this.props.popup.step_1, 'image', null)
+        const title = _.get(this.props.popup.step_1, 'title', null)
+        const description = _.get(this.props.popup.step_1, 'description', null)
         
-        const currency = _.get(this.props.popup, 'currency', '฿')
-        const increase_number = _.get(this.props.popup, 'increase_number', 1)
-        const min = _.get(this.props.popup, 'min', null)
-        const max = _.get(this.props.popup, 'max', null)
+        const currency = _.get(this.props.popup.step_1, 'currency', '฿')
+        const increase_number = _.get(this.props.popup.step_1, 'increase_number', 1)
+        const min = _.get(this.props.popup.step_1, 'min', null)
+        const max = _.get(this.props.popup.step_1, 'max', null)
 
-        const button = _.get(this.props.popup, 'button', {})
-        const increase_charges =  _.get(this.props.popup, 'button.increase_number', 1)
+        const button = _.get(this.props.popup.step_1, 'button', {})
+        const increase_charges =  _.get(this.props.popup.step_1, 'button.increase_number', 1)
+
+        // step 2
+        const step_2_title = _.get(this.props.popup.step_2, 'title', null) 
+        const step_2_description = _.get(this.props.popup.step_2, 'description', null) 
+        const step_2_items = _.get(this.props.popup.step_2, 'items', []) 
+        const step_2_button = _.get(this.props.popup.step_2, 'button', {})
+
         return (
                 <Modal isVisible={_.get(this.props, 'show', false)} onBackdropPress={() => { }}>
                     {
@@ -151,31 +159,26 @@ class CircleCardModal extends React.Component {
                             <View style={{ padding: 15 }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 15, marginTop: 10, }}>
                                     <View style={{ padding: 5 }}>
-                                        <Text style={{ color: "#4B4B4B", fontSize: 15, fontWeight: 'bold' }} >IMPORTANT</Text>
+                                        <Text style={{ color: "#4B4B4B", fontSize: 15, fontWeight: 'bold' }} >{ step_2_title }</Text>
                                     </View>
                                 </View>
-                                <View style={{ flexDirection: "row", padding: 10, width: '100%', }}>
-                                    <SvgUri
-                                        style={{ paddingRight: 18, paddingTop: 5, }}
-                                        width="20"
-                                        height="20"
-                                        source={require('../../images/phone.svg')}
-                                    />
-                                    <View style={{ flex: 1 }}>
-                                        <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', }}>Taylor Swift Reputation Stadium a Tour with special guests Camlia Cabello and CharliXOX</Text>
-                                    </View>
-                                </View>
-                                <View style={{ flexDirection: "row", padding: 10, width: '100%', }}>
-                                    <SvgUri
-                                        style={{ paddingRight: 18, paddingTop: 5, }}
-                                        width="20"
-                                        height="20"
-                                        source={require('../../images/location.svg')} 
-                                    />
-                                    <View style={{ flex: 1 }}>
-                                        <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', }}>Taylor Alison Swift (born December 13, 1989) is an American singer-songwriter</Text>
-                                    </View>
-                                </View>
+                                {
+                                    step_2_items.map((item) => {
+                                        return (
+                                            <View style={{ flexDirection: "row", padding: 10, width: '100%', }}>
+                                                <SvgUri
+                                                    style={{ paddingRight: 18, paddingTop: 5, }}
+                                                    width="20"
+                                                    height="20"
+                                                    source={item.image}
+                                                />
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={{ color: "#4B4B4B", fontSize: 14, fontWeight: '400', }}>{ item.description }</Text>
+                                                </View>
+                                            </View>
+                                        )
+                                    })
+                                }
                             </View>
                         </View>
                         <Button full light 
@@ -188,7 +191,7 @@ class CircleCardModal extends React.Component {
                                 })
                             }}
                             style={{ backgroundColor: "#F8F8F8", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
-                            <Text style={{ color: "#4B4B4B", fontSize: 14, }} >GOT IT</Text>
+                            <Text style={{ color: "#4B4B4B", fontSize: 14, }} >{ step_2_button.text }</Text>
                         </Button> 
                     </View>
                 }
