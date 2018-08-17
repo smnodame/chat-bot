@@ -87,7 +87,7 @@ export default class MultiInputQuestion extends React.Component {
                             }
                         })
                     }}
-                    full light style={{ backgroundColor: "#999", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, borderTopWidth: 1, borderColor: "#DDD" }}>
+                    full light style={{ backgroundColor: "#999", borderBottomLeftRadius: 5, borderBottomRightRadius: 5, borderWidth: 0, }}>
                     <Text style={{ color: "#FFF", fontSize: 14, fontWeight: "bold", }} >{ text }</Text>
                 </Button> 
             </Modal>

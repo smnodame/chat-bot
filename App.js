@@ -76,12 +76,12 @@ const config = {
         latitude: 48.864601,
         longitude: 2.398704
       },
-      trigger: '4'
+      trigger: '5'
     },
     {
       id: '4',
-      trigger: '5',
-      message: 'your number is {number}',
+      trigger: '7',
+      message: 'I am thinking number {number}.',
       input: {
         mode: 'INPUT',
         textinput: {
@@ -97,7 +97,7 @@ const config = {
     {
       id: '5',
       message: 'What number I am thinking?',
-      trigger: '6',
+      trigger: '4',
     },
     {
       id: '6',
@@ -109,11 +109,16 @@ const config = {
           key: 'answer',
         },
       },
-      trigger: '7',
+      trigger: '7.1',
     },
     {
       id: '7',
-      message: 'I AM OK?',
+      message: 'How are you today?',
+      trigger: '6',
+    },
+    {
+      id: '7.1',
+      message: 'Where are you?',
       trigger: '8',
     },
     {
@@ -124,7 +129,7 @@ const config = {
         options: [{
           label: 'CHIANG MAI',
           value: 'I AM IN CHIANG MAI',
-          trigger: '9',
+          trigger: '8.1',
         }, {
           label: 'BANGKOK',
           value: 'I AM IN BANGKOK',
@@ -135,6 +140,11 @@ const config = {
           trigger: '11',
         }]
       }
+    },
+    {
+      id: '8.1',
+      message: 'Since?',
+      trigger: '9'
     },
     {
       id: '9',
@@ -281,7 +291,7 @@ const config = {
     {
       id: '16',
       question: 'choose you option!',
-      message: 'You have to pay more {total}',
+      message: 'You have to pay more {total} bath.',
       trigger: '2',
       input: {
         mode: 'CIRCLE-CARD',
